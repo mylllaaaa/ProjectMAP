@@ -22,9 +22,9 @@ public class User implements Serializable {
 	private Curso curso;
 	private Date dataNascimento;
 	private int denuncias;
+	private String senha;
 	
-	public User(String matricula, String nome, String email, Campus campus, Curso curso, Date dataNascimento,
-			int denuncias) {
+	public User(String matricula, String nome, String email, Campus campus, Curso curso, Date dataNascimento, String senha) {
 		super();
 		this.matricula = matricula;
 		this.nome = nome;
@@ -32,7 +32,7 @@ public class User implements Serializable {
 		this.campus = campus;
 		this.curso = curso;
 		this.dataNascimento = dataNascimento;
-		this.denuncias = denuncias;
+		this.denuncias = 0;
 	}
 
 	public String getMatricula() {
@@ -89,6 +89,14 @@ public class User implements Serializable {
 
 	public void setDenuncias(int denuncias) {
 		this.denuncias = denuncias;
+	}
+	
+	public String getSenha() {
+		return senha;
+	}
+
+	public void alterarSenha(String senha) {
+		this.senha = senha;
 	}
 
 	@Override
