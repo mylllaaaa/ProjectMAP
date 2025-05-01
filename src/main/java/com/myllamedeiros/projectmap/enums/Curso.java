@@ -2,7 +2,7 @@ package com.myllamedeiros.projectmap.enums;
 
 public enum Curso {
 
-	ADMINISTRCAO,
+	ADMINISTRACAO,
 	COMPUTACAO,
 	FISICA,
 	MATEMATICA;
