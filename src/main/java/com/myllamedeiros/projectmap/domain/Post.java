@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.Objects;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Field;
+import org.springframework.data.mongodb.core.mapping.FieldType;
 
 public class Post implements Serializable {
 
@@ -12,14 +14,11 @@ public class Post implements Serializable {
 	private String id_post;
 	private String titulo;
 	private String descricao;
-	private String imagemUrl;
 	
-	public Post(String titulo, String descricao, String imagemUrl) {
-		super();
-		this.titulo = titulo;
-		this.descricao = descricao;
-		this.imagemUrl = imagemUrl;
-	}
+	@Field(targetType = FieldType.BINARY) 
+    private byte[] imagem;
+	
+	
 
 	public String getId_post() {
 		return id_post;
@@ -45,13 +44,13 @@ public class Post implements Serializable {
 		this.descricao = descricao;
 	}
 
-	public String getImagemUrl() {
-		return imagemUrl;
-	}
+	public byte[] getImagem() {
+        return imagem;
+    }
 
-	public void setImagemUrl(String imagemUrl) {
-		this.imagemUrl = imagemUrl;
-	}
+    public void setImagem(byte[] imagem) {
+        this.imagem = imagem;
+    }
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
