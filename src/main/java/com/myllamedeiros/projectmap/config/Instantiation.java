@@ -23,7 +23,7 @@ public class Instantiation implements CommandLineRunner{
 		userRepository.deleteAll();
 		
 		SimpleDateFormat sdf =  new SimpleDateFormat("dd/MM/yyyy");
-		User myllena = new User("498406791", "Myllena de Sousa Medeiros", "mylla@gmail.com", Campus.CAMPUSVII, Curso.COMPUTACAO, sdf.parse("12/05/2005"), "anellym", "Namorada de André");
+		User myllena = new User("498406791", "Myllena de Sousa Medeiros", "Mylla","mylla@gmail.com", Campus.CAMPUSVII, Curso.COMPUTACAO, sdf.parse("12/05/2005"), "anellym", "Namorada de André");
 		
 		userRepository.saveAll(Arrays.asList(myllena));
 	}

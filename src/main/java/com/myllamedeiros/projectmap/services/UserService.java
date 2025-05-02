@@ -1,4 +1,4 @@
-package com.myllamedeiros.projectmap.services;
+  package com.myllamedeiros.projectmap.services;
 
 import java.util.List;
 import java.util.Optional;
@@ -42,6 +42,7 @@ public class UserService {
 
 	private void updateData(User inicialObj, User newObj) {
 		inicialObj.setNome(newObj.getNome());
+		inicialObj.setNomeDeUsuario(newObj.getNomeDeUsuario());
 		inicialObj.setEmail(newObj.getEmail());
 		inicialObj.setCampus(newObj.getCampus());
 		inicialObj.setCurso(newObj.getCurso());

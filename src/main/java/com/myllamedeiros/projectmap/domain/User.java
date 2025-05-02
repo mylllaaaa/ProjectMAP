@@ -17,6 +17,7 @@ public class User implements Serializable {
 	@Id
 	private String matricula;
 	private String nome;
+	private String nomeDeUsuario;
 	private String email;
 	private Campus campus;
 	private Curso curso;
@@ -25,10 +26,11 @@ public class User implements Serializable {
 	private String senha;
 	private String descricao;
 
-	public User(String matricula, String nome, String email, Campus campus, Curso curso, Date dataNascimento, String senha, String descricao) {
+	public User(String matricula, String nome, String nomeDeUsuario, String email, Campus campus, Curso curso, Date dataNascimento, String senha, String descricao) {
 		super();
 		this.matricula = matricula;
 		this.nome = nome;
+		this.nomeDeUsuario = nomeDeUsuario;
 		this.email = email;
 		this.campus = campus;
 		this.curso = curso;
@@ -52,6 +54,14 @@ public class User implements Serializable {
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+
+	public String getNomeDeUsuario() {
+		return nomeDeUsuario;
+	}
+
+	public void setNomeDeUsuario(String nomeDeUsuario) {
+		this.nomeDeUsuario = nomeDeUsuario;
 	}
 
 	public String getEmail() {

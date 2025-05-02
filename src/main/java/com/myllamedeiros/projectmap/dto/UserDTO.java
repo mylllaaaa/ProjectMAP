@@ -11,7 +11,7 @@ public class UserDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
-	private String nome;
+	private String nomeDeUsuario;
 	private Campus campus;
 	private Curso curso;
 	private String descricao;
@@ -22,17 +22,17 @@ public class UserDTO implements Serializable {
 	}
 	public UserDTO(User user) {
 		super();
-		nome = user.getNome();
+		nomeDeUsuario = user.getNomeDeUsuario();
 		campus = user.getCampus();
 		curso = user.getCurso();
 		descricao = user.getDescricao();
 		idade = VerificadorDeIdades.retornarIdade(user.getDataNascimento());
 	}
-	public String getNome() {
-		return nome;
+	public String getNomeDeUsuario() {
+		return nomeDeUsuario;
 	}
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setNomeDeUsuario(String nomeDeUsuario) {
+		this.nomeDeUsuario = nomeDeUsuario;
 	}
 	public Campus getCampus() {
 		return campus;
