@@ -28,4 +28,9 @@ public class UserService {
 	public User insert(User user) {
 		return rep.insert(user);
 	}
+	
+	public void delete(String id) {
+		findById(id);
+		rep.deleteById(id);
+	}
 }
