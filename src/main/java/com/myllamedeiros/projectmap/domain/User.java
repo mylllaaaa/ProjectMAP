@@ -23,8 +23,9 @@ public class User implements Serializable {
 	private Date dataNascimento;
 	private int denuncias;
 	private String senha;
-	
-	public User(String matricula, String nome, String email, Campus campus, Curso curso, Date dataNascimento, String senha) {
+	private String descricao;
+
+	public User(String matricula, String nome, String email, Campus campus, Curso curso, Date dataNascimento, String senha, String descricao) {
 		super();
 		this.matricula = matricula;
 		this.nome = nome;
@@ -33,6 +34,7 @@ public class User implements Serializable {
 		this.curso = curso;
 		this.dataNascimento = dataNascimento;
 		this.senha = senha;
+		this.descricao =  descricao;
 		this.denuncias = 0;
 	}
 
@@ -98,6 +100,14 @@ public class User implements Serializable {
 
 	public void alterarSenha(String senha) {
 		this.senha = senha;
+	}
+	
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
 	}
 
 	@Override

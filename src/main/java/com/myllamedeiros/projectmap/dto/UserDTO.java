@@ -1,4 +1,4 @@
-package com.myllamedeiros.projectmap.dto;
+ package com.myllamedeiros.projectmap.dto;
 
 import java.io.Serializable;
 
@@ -14,6 +14,7 @@ public class UserDTO implements Serializable {
 	private String nome;
 	private Campus campus;
 	private Curso curso;
+	private String descricao;
 	private Integer idade;
 	
 	public UserDTO() {
@@ -24,6 +25,7 @@ public class UserDTO implements Serializable {
 		nome = user.getNome();
 		campus = user.getCampus();
 		curso = user.getCurso();
+		descricao = user.getDescricao();
 		idade = VerificadorDeIdades.retornarIdade(user.getDataNascimento());
 	}
 	public String getNome() {
@@ -49,5 +51,11 @@ public class UserDTO implements Serializable {
 	}
 	public void setIdade(Integer idade) {
 		this.idade = idade;
+	}
+	public String getDescricao() {
+		return descricao;
+	}
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
 	}
 }

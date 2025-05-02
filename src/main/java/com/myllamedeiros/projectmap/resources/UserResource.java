@@ -39,6 +39,11 @@ public class UserResource {
 		return ResponseEntity.ok().body(new UserDTO(obj));
 	}
 	
+	@RequestMapping(value = "/{id}/complete", method=RequestMethod.GET)
+	public ResponseEntity<User> findByIdComplete(@PathVariable String id){
+		return ResponseEntity.ok().body(service.findById(id));
+	}
+	
 	@RequestMapping(method=RequestMethod.POST)
 	public ResponseEntity<Void> insert(@RequestBody User user){
 		User obj = service.insert(user);
