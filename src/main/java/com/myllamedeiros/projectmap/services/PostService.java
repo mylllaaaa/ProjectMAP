@@ -35,7 +35,6 @@ public class PostService {
         return rep.save(post);
     }
 	
-	
 	public void delete(String id) {
 		findById(id);
 		rep.deleteById(id);

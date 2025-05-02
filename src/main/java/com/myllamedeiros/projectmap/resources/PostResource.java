@@ -2,7 +2,9 @@ package com.myllamedeiros.projectmap.resources;
 
 import java.io.IOException;
 import java.net.URI;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -35,9 +37,26 @@ public class PostResource {
 	}
 	
 	@RequestMapping(value = "/{id}", method=RequestMethod.GET)
-	public ResponseEntity<Post> findById(@PathVariable String id){
-		Post obj = service.findById(id);
-		return ResponseEntity.ok().body(obj);
+	public ResponseEntity<Map<String, Object>> getPost(@PathVariable String id) {
+	    Post post = service.findById(id);
+	    if (post == null) {
+	        return ResponseEntity.notFound().build();
+	    }
+
+	    String imagemUrl = ServletUriComponentsBuilder
+	        .fromCurrentContextPath()
+	        .path("/posts/")
+	        .path(id)
+	        .path("/imagem")
+	        .toUriString();
+
+	    Map<String, Object> response = new LinkedHashMap<>();
+	    response.put("id", post.getId_post());
+	    response.put("titulo", post.getTitulo());
+	    response.put("descricao", post.getDescricao());
+	    response.put("imagemUrl", imagemUrl);
+
+	    return ResponseEntity.ok(response);
 	}
 	
 	@PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -71,8 +90,10 @@ public class PostResource {
 	    Post post = service.findById(id);
 	    
 	    return ResponseEntity.ok()
-	            .contentType(MediaType.IMAGE_JPEG) // Define o tipo da imagem
-	            .body(post.getImagem()); // Retorna os bytes da imagem
+	            .contentType(MediaType.IMAGE_JPEG) // ou IMAGE_PNG se for png
+	            .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"imagem.jpg\"")
+	            .body(post.getImagem());
+
 	}
 	
 	@RequestMapping(value = "/{id}", method=RequestMethod.DELETE)
