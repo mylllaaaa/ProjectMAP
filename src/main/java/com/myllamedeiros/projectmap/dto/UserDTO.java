@@ -21,10 +21,10 @@ public class UserDTO implements Serializable {
 	}
 	public UserDTO(User user) {
 		super();
-		this.nome = user.getNome();
-		this.campus = user.getCampus();
-		this.curso = user.getCurso();
-		this.idade = VerificadorDeIdades.retornarIdade(user.getDataNascimento());
+		nome = user.getNome();
+		campus = user.getCampus();
+		curso = user.getCurso();
+		idade = VerificadorDeIdades.retornarIdade(user.getDataNascimento());
 	}
 	public String getNome() {
 		return nome;

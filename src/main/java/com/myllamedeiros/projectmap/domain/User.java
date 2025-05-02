@@ -32,6 +32,7 @@ public class User implements Serializable {
 		this.campus = campus;
 		this.curso = curso;
 		this.dataNascimento = dataNascimento;
+		this.senha = senha;
 		this.denuncias = 0;
 	}
 
