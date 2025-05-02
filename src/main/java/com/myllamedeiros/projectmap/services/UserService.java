@@ -33,4 +33,21 @@ public class UserService {
 		findById(id);
 		rep.deleteById(id);
 	}
+	
+	public User update(User newObj) {
+		User inicialObj = rep.findById(newObj.getMatricula()).orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado"));
+		updateData(inicialObj, newObj);
+		return rep.save(newObj);   
+	}
+
+	private void updateData(User inicialObj, User newObj) {
+		inicialObj.setNome(newObj.getNome());
+		inicialObj.setEmail(newObj.getEmail());
+		inicialObj.setCampus(newObj.getCampus());
+		inicialObj.setCurso(newObj.getCurso());
+		inicialObj.setDataNascimento(newObj.getDataNascimento());
+		inicialObj.setSenha(newObj.getSenha());
+		inicialObj.setDescricao(newObj.getDescricao());
+		inicialObj.setDenuncias(newObj.getDenuncias()); 
+	}
 }

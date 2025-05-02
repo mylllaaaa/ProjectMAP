@@ -98,7 +98,7 @@ public class User implements Serializable {
 		return senha;
 	}
 
-	public void alterarSenha(String senha) {
+	public void setSenha(String senha) {
 		this.senha = senha;
 	}
 	
