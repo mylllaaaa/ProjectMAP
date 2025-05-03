@@ -1,10 +1,12 @@
   package com.myllamedeiros.projectmap.services;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.myllamedeiros.projectmap.domain.User;
 import com.myllamedeiros.projectmap.repository.UserRepository;
@@ -25,7 +27,8 @@ public class UserService {
 		return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado"));
 	}
 	
-	public User insert(User user) {
+	public User insert(User user, MultipartFile imagem) throws IOException {
+		user.setImagem(imagem.getBytes());
 		return rep.insert(user);
 	}
 	

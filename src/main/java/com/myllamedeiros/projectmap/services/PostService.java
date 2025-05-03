@@ -28,13 +28,8 @@ public class PostService {
 		return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado"));
 	}
 	
-	public Post savePost(String titulo, String descricao, MultipartFile imagem) throws IOException {
-        Post post = new Post();
-        post.setTitulo(titulo);
-        post.setDescricao(descricao);
-		post.setImagem(imagem.getBytes());
-		post.setDenuncias(0);
-		post.setData(new Date());
+	public Post savePost(Post post, MultipartFile imagem) throws IOException {
+        post.setImagem(imagem.getBytes());
         return rep.save(post);
     }
 	

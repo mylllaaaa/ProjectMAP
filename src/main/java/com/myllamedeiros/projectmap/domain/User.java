@@ -6,6 +6,8 @@ import java.util.Objects;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
+import org.springframework.data.mongodb.core.mapping.FieldType;
 
 import com.myllamedeiros.projectmap.enums.Campus;
 import com.myllamedeiros.projectmap.enums.Curso;
@@ -25,6 +27,10 @@ public class User implements Serializable {
 	private Integer denuncias;
 	private String senha;
 	private String descricao;
+	private Date dataCriacao;
+	
+	@Field(targetType = FieldType.BINARY) 
+    private byte[] imagem;	
 
 	public User(String matricula, String nome, String nomeDeUsuario, String email, Campus campus, Curso curso, Date dataNascimento, String senha, String descricao) {
 		super();
@@ -38,6 +44,7 @@ public class User implements Serializable {
 		this.senha = senha;
 		this.descricao =  descricao;
 		this.denuncias = 0;
+		setDataCriacao(new Date());
 	}
 
 	public String getMatricula() {
@@ -119,6 +126,14 @@ public class User implements Serializable {
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
+	
+	public byte[] getImagem() {
+		return imagem;
+	}
+
+	public void setImagem(byte[] imagem) {
+		this.imagem = imagem;
+	}
 
 	@Override
 	public int hashCode() {
@@ -135,6 +150,14 @@ public class User implements Serializable {
 			return false;
 		User other = (User) obj;
 		return Objects.equals(matricula, other.matricula);
+	}
+
+	public Date getDataCriacao() {
+		return dataCriacao;
+	}
+
+	public void setDataCriacao(Date dataCriacao) {
+		this.dataCriacao = dataCriacao;
 	}
 	
 }

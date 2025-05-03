@@ -20,6 +20,17 @@ public class Post implements Serializable {
 	
 	@Field(targetType = FieldType.BINARY) 
     private byte[] imagem;	
+	
+	public Post() {
+		
+	}
+	
+	public Post(String titulo, String descricao) {
+	   this.titulo = titulo;
+	   this.descricao = descricao;
+	   denuncias = 0;
+	   setData(new Date());
+	}
 
 	public String getId_post() {
 		return id_post;
