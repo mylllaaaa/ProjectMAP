@@ -1,6 +1,7 @@
 package com.myllamedeiros.projectmap.domain;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.Objects;
 
 import org.springframework.data.annotation.Id;
@@ -15,10 +16,10 @@ public class Post implements Serializable {
 	private String titulo;
 	private String descricao;
 	private Integer denuncias; 
+	private Date data;
 	
 	@Field(targetType = FieldType.BINARY) 
-    private byte[] imagem;
-	
+    private byte[] imagem;	
 
 	public String getId_post() {
 		return id_post;
@@ -62,6 +63,14 @@ public class Post implements Serializable {
 
 	public void setDenuncias(Integer denuncias) {
 		this.denuncias = denuncias;
+	}
+
+	public Date getData() {
+		return data;
+	}
+
+	public void setData(Date data) {
+		this.data = data;
 	}
 
 	@Override

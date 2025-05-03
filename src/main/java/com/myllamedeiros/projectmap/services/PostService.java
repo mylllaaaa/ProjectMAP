@@ -1,6 +1,7 @@
 package com.myllamedeiros.projectmap.services;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,6 +34,7 @@ public class PostService {
         post.setDescricao(descricao);
 		post.setImagem(imagem.getBytes());
 		post.setDenuncias(0);
+		post.setData(new Date());
         return rep.save(post);
     }
 	
@@ -48,7 +50,6 @@ public class PostService {
 	}
 
 	private void partialUpdate(Post inicialObj, Post newObj) {
-		
 	    if (newObj.getTitulo() != null) {
 	    	inicialObj.setTitulo(newObj.getTitulo());
 	    }
@@ -58,10 +59,7 @@ public class PostService {
 	    if (newObj.getImagem() != null) {
 	    	inicialObj.setImagem(newObj.getImagem());
 	    } //não pode alterar a imagem, mas deixa aqui pra garantir que ela não vai receber null
-	    if (newObj.getDenuncias() != null) {
-	    	inicialObj.setDenuncias(newObj.getDenuncias());
-	    }
+	    
+	    inicialObj.setData(new Date());
 	}
-
-	
 }

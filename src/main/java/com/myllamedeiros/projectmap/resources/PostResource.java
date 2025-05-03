@@ -59,20 +59,16 @@ public class PostResource {
  	}
 	
 	@PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-	public ResponseEntity<Void> savePost(
-	    @RequestParam(required = true) String titulo,
-	    @RequestParam(required = true) String descricao,
-	    @RequestParam(required = true) MultipartFile imagem
-	) {
-
+	public ResponseEntity<Void> savePost(@RequestParam(required = true) String titulo, @RequestParam(required = true) String descricao, @RequestParam(required = true) MultipartFile imagem) {
+		
 		if (imagem.isEmpty() || titulo.isBlank() || descricao.isBlank()) {
-	        return ResponseEntity.badRequest().build(); // HTTP 400
+	        return ResponseEntity.badRequest().build(); 
 	    }
-
 	    try {
 	        Post obj = service.savePost(titulo, descricao, imagem);
+	        
 	        URI uri = ServletUriComponentsBuilder
-	            .fromCurrentRequest()
+	        	.fromCurrentRequest()
 	            .path("/{id}")  
 	            .buildAndExpand(obj.getId_post())
 	            .toUri();
