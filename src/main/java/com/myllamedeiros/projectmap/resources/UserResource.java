@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -57,9 +58,9 @@ public class UserResource {
 		return ResponseEntity.noContent().build();
 	}
 	
-	@RequestMapping(value = "/{id}", method=RequestMethod.PUT)
+	@PatchMapping("/{id}")
 	public ResponseEntity<Void> update(@RequestBody User newUser, @PathVariable String id){
-		newUser = service.update(newUser);
+		newUser = service.update(newUser, id);
 		return ResponseEntity.noContent().build();
 	}
 }

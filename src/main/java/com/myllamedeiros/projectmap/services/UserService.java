@@ -34,21 +34,42 @@ public class UserService {
 		rep.deleteById(id);
 	}
 	
-	public User update(User newObj) {
-		User inicialObj = rep.findById(newObj.getMatricula()).orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado"));
-		updateData(inicialObj, newObj);
-		return rep.save(newObj);   
+	public User update(User newObj, String id) {
+		User inicialObj = rep.findById(id).orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado"));
+		partialUpdate(inicialObj, newObj);
+		return rep.save(inicialObj);   
 	}
-
-	private void updateData(User inicialObj, User newObj) {
-		inicialObj.setNome(newObj.getNome());
-		inicialObj.setNomeDeUsuario(newObj.getNomeDeUsuario());
-		inicialObj.setEmail(newObj.getEmail());
-		inicialObj.setCampus(newObj.getCampus());
-		inicialObj.setCurso(newObj.getCurso());
-		inicialObj.setDataNascimento(newObj.getDataNascimento());
-		inicialObj.setSenha(newObj.getSenha());
-		inicialObj.setDescricao(newObj.getDescricao());
-		inicialObj.setDenuncias(newObj.getDenuncias()); 
+	
+	private void partialUpdate(User inicialObj, User newObj) {
+		
+	    if (newObj.getNome() != null) {
+			inicialObj.setNome(newObj.getNome());
+	    }
+	    if (newObj.getNomeDeUsuario() != null) {
+			inicialObj.setNomeDeUsuario(newObj.getNomeDeUsuario());
+	    }
+	    if (newObj.getEmail() != null) {
+			inicialObj.setEmail(newObj.getEmail());
+	    }
+	    
+	    if (newObj.getCampus() != null) {
+			inicialObj.setCampus(newObj.getCampus());
+	    }
+	    if (newObj.getCurso() != null) {
+			inicialObj.setCurso(newObj.getCurso());
+	    }
+	    if (newObj.getDataNascimento() != null) {
+			inicialObj.setDataNascimento(newObj.getDataNascimento());
+	    }
+	    
+	    if (newObj.getSenha() != null) {
+			inicialObj.setSenha(newObj.getSenha());
+	    }
+	    if (newObj.getDescricao() != null) {
+			inicialObj.setDescricao(newObj.getDescricao());
+	    }
+	    if (newObj.getDenuncias() != null) {
+			inicialObj.setDenuncias(newObj.getDenuncias()); 
+	    }
 	}
 }

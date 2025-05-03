@@ -14,10 +14,10 @@ public class Post implements Serializable {
 	private String id_post;
 	private String titulo;
 	private String descricao;
+	private Integer denuncias; 
 	
 	@Field(targetType = FieldType.BINARY) 
     private byte[] imagem;
-	
 	
 
 	public String getId_post() {
@@ -54,6 +54,14 @@ public class Post implements Serializable {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+	
+	public Integer getDenuncias() {
+		return denuncias;
+	}
+
+	public void setDenuncias(Integer denuncias) {
+		this.denuncias = denuncias;
 	}
 
 	@Override

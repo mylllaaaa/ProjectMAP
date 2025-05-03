@@ -32,6 +32,7 @@ public class PostService {
         post.setTitulo(titulo);
         post.setDescricao(descricao);
 		post.setImagem(imagem.getBytes());
+		post.setDenuncias(0);
         return rep.save(post);
     }
 	
@@ -39,5 +40,28 @@ public class PostService {
 		findById(id);
 		rep.deleteById(id);
 	}
+	
+	public Post update(Post newObj, String id) {
+		Post inicialObj = rep.findById(id).orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado"));
+		partialUpdate(inicialObj, newObj);
+		return rep.save(inicialObj);   
+	}
+
+	private void partialUpdate(Post inicialObj, Post newObj) {
+		
+	    if (newObj.getTitulo() != null) {
+	    	inicialObj.setTitulo(newObj.getTitulo());
+	    }
+	    if (newObj.getDescricao() != null) {
+	    	inicialObj.setDescricao(newObj.getDescricao());
+	    }
+	    if (newObj.getImagem() != null) {
+	    	inicialObj.setImagem(newObj.getImagem());
+	    } //não pode alterar a imagem, mas deixa aqui pra garantir que ela não vai receber null
+	    if (newObj.getDenuncias() != null) {
+	    	inicialObj.setDenuncias(newObj.getDenuncias());
+	    }
+	}
+
 	
 }

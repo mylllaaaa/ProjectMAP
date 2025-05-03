@@ -22,7 +22,7 @@ public class User implements Serializable {
 	private Campus campus;
 	private Curso curso;
 	private Date dataNascimento;
-	private int denuncias;
+	private Integer denuncias;
 	private String senha;
 	private String descricao;
 
@@ -96,11 +96,11 @@ public class User implements Serializable {
 		this.dataNascimento = dataNascimento;
 	}
 
-	public int getDenuncias() {
+	public Integer getDenuncias() {
 		return denuncias;
 	}
 
-	public void setDenuncias(int denuncias) {
+	public void setDenuncias(Integer denuncias) {
 		this.denuncias = denuncias;
 	}
 	
