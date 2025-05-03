@@ -7,9 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 
+import com.myllamedeiros.projectmap.domain.Post;
 import com.myllamedeiros.projectmap.domain.User;
+import com.myllamedeiros.projectmap.dto.AuthorDTO;
 import com.myllamedeiros.projectmap.enums.Campus;
 import com.myllamedeiros.projectmap.enums.Curso;
+import com.myllamedeiros.projectmap.repository.PostRepository;
 import com.myllamedeiros.projectmap.repository.UserRepository;
 
 @Configuration
@@ -17,6 +20,9 @@ public class Instantiation implements CommandLineRunner{
 	
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	private PostRepository postRepository;
 	
 	@Override
 	public void run(String... args) throws Exception {
@@ -26,6 +32,9 @@ public class Instantiation implements CommandLineRunner{
 		User myllena = new User("498406791", "Myllena de Sousa Medeiros", "Mylla","mylla@gmail.com", Campus.CAMPUSVII, Curso.COMPUTACAO, sdf.parse("12/05/2005"), "anellym", "Namorada de André");
 		
 		userRepository.saveAll(Arrays.asList(myllena));
+		
+		Post primeiroPost = new Post("Titulo do post", "Testando o post", new AuthorDTO(myllena));
+		
+		postRepository.saveAll(Arrays.asList(primeiroPost));
 	}
-
 }

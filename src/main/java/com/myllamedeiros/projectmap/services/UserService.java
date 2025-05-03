@@ -54,7 +54,6 @@ public class UserService {
 	    if (newObj.getEmail() != null) {
 			inicialObj.setEmail(newObj.getEmail());
 	    }
-	    
 	    if (newObj.getCampus() != null) {
 			inicialObj.setCampus(newObj.getCampus());
 	    }
@@ -64,7 +63,6 @@ public class UserService {
 	    if (newObj.getDataNascimento() != null) {
 			inicialObj.setDataNascimento(newObj.getDataNascimento());
 	    }
-	    
 	    if (newObj.getSenha() != null) {
 			inicialObj.setSenha(newObj.getSenha());
 	    }
