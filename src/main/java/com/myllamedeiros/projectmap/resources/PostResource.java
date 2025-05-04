@@ -78,7 +78,6 @@ public class PostResource {
 	    	AuthorDTO author = criadorDeAuthorDTO.retornaAuthorDTO(matriculaDoAutor);
 	    	Post post = new Post(postTitle, postDescription, author);
 	        post = service.savePost(post, imagem);
-	        
 	        URI uri = ServletUriComponentsBuilder
 	        	.fromCurrentRequest()
 	            .path("/{id}")  
@@ -102,14 +101,14 @@ public class PostResource {
 	            .body(post.getImagem());
 
 	}
-	
+
 	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<Void> delete(@PathVariable String id){
 		service.delete(id);
 		return ResponseEntity.noContent().build();
 	}
 	
-	@PatchMapping("/{id}")
+	@PatchMapping(value = "/{id}")
 	public ResponseEntity<Void> update(@RequestBody Post newPost, @PathVariable String id){
 		newPost = service.update(newPost, id);
 		return ResponseEntity.noContent().build();

@@ -1,6 +1,7 @@
 package com.myllamedeiros.projectmap.dto;
 
 import java.io.Serializable;
+import java.util.Optional;
 
 import com.myllamedeiros.projectmap.domain.User;
 import com.myllamedeiros.projectmap.enums.Campus;

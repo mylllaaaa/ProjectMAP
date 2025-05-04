@@ -22,8 +22,8 @@ public class Post implements Serializable {
 	private String descricao;
 	private Integer curtidas;
 	private Integer denuncias; 
-	private Date data;
 	private AuthorDTO author;
+	private Date data;
 	
 	@Field(targetType = FieldType.BINARY) 
     private byte[] imagem;	
@@ -132,6 +132,14 @@ public class Post implements Serializable {
 			return false;
 		Post other = (Post) obj;
 		return Objects.equals(id, other.id);
+	}
+
+	public AuthorDTO getAutor() {
+		return author;
+	}
+
+	public void setAutor(AuthorDTO autor) {
+		this.author = autor;
 	}
 	
 }
