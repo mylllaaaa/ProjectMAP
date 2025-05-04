@@ -8,7 +8,6 @@ import com.myllamedeiros.projectmap.enums.Curso;
 import com.myllamedeiros.projectmap.util.VerificadorDeIdades;
 
 public class UserDTO implements Serializable {
-
 	private static final long serialVersionUID = 1L;
 	
 	private String nomeDeUsuario;

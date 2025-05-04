@@ -8,17 +8,19 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.data.mongodb.core.mapping.FieldType;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.myllamedeiros.projectmap.dto.AuthorDTO;
 
 @Document(collection="post")
 public class Post implements Serializable {
-
 	private static final long serialVersionUID = 1L;
+	
 	@Id
 	private String id;
 	private String titulo;
 	private String descricao;
+	private Integer curtidas;
 	private Integer denuncias; 
 	private Date data;
 	private AuthorDTO author;
@@ -33,16 +35,16 @@ public class Post implements Serializable {
 	public Post(String titulo, String descricao, AuthorDTO author) {
 	   this.titulo = titulo;
 	   this.descricao = descricao;
-	   this.author = author;
+	   curtidas = 0;
 	   denuncias = 0;
 	   setData(new Date());
+	   this.author = author;
 	}
-
-	public String getId_post() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId_post(String id_post) {
+	public void setId(String id_post) {
 		this.id = id_post;
 	}
 
@@ -60,6 +62,13 @@ public class Post implements Serializable {
 
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
+	}
+	public Integer getCurtidas() {
+		return curtidas;
+	}
+
+	public void setCurtidas(Integer curtidas) {
+		this.curtidas = curtidas;
 	}
 
 	public byte[] getImagem() {
@@ -96,6 +105,16 @@ public class Post implements Serializable {
 
 	public void setAuthor(AuthorDTO author) {
 		this.author = author;
+	}
+	
+	public String imagemFilePath() {
+		String imagemUrl = ServletUriComponentsBuilder
+     	        .fromCurrentContextPath()
+     	        .path("/posts/")
+     	        .path(id)
+     	        .path("/imagem")
+     	        .toUriString();
+		return imagemUrl;
 	}
 
 	@Override

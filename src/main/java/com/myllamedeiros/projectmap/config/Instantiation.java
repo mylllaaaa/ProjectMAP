@@ -32,9 +32,5 @@ public class Instantiation implements CommandLineRunner{
 		User myllena = new User("498406791", "Myllena de Sousa Medeiros", "Mylla","mylla@gmail.com", Campus.CAMPUSVII, Curso.COMPUTACAO, sdf.parse("12/05/2005"), "anellym", "Namorada de André");
 		
 		userRepository.saveAll(Arrays.asList(myllena));
-		
-		Post primeiroPost = new Post("Titulo do post", "Testando o post", new AuthorDTO(myllena));
-		
-		postRepository.saveAll(Arrays.asList(primeiroPost));
 	}
 }
