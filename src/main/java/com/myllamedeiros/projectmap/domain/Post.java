@@ -20,8 +20,8 @@ public class Post implements Serializable {
 	private String titulo;
 	private String descricao;
 	private Integer denuncias; 
+	private AuthorDTO autor;
 	private Date data;
-	private AuthorDTO author;
 	
 	@Field(targetType = FieldType.BINARY) 
     private byte[] imagem;	
@@ -30,10 +30,10 @@ public class Post implements Serializable {
 		
 	}
 	
-	public Post(String titulo, String descricao, AuthorDTO author) {
+	public Post(String titulo, String descricao, AuthorDTO autor) {
 	   this.titulo = titulo;
 	   this.descricao = descricao;
-	   this.author = author;
+	   setAutor(autor);
 	   denuncias = 0;
 	   setData(new Date());
 	}
@@ -89,14 +89,6 @@ public class Post implements Serializable {
 	public void setData(Date data) {
 		this.data = data;
 	}
-	
-	public AuthorDTO getAuthor() {
-		return author;
-	}
-
-	public void setAuthor(AuthorDTO author) {
-		this.author = author;
-	}
 
 	@Override
 	public int hashCode() {
@@ -113,6 +105,14 @@ public class Post implements Serializable {
 			return false;
 		Post other = (Post) obj;
 		return Objects.equals(id, other.id);
+	}
+
+	public AuthorDTO getAutor() {
+		return autor;
+	}
+
+	public void setAutor(AuthorDTO autor) {
+		this.autor = autor;
 	}
 	
 }

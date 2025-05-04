@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,7 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -60,14 +61,14 @@ public class PostResource {
 	
 	@PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ResponseEntity<Void> savePost(
-		@RequestBody(required = true) Post post,
-		@RequestParam(required = true) MultipartFile imagem) {
+	        @RequestPart("post") Post post,
+	        @RequestPart("imagem") MultipartFile imagem) {
 		
 		if (imagem.isEmpty() || post == null) {
 	        return ResponseEntity.badRequest().build(); 
 	    }
 	    try {
-	        Post obj = service.savePost(post, imagem);
+	    	 Post obj = service.savePost(post, imagem);
 	        
 	        URI uri = ServletUriComponentsBuilder
 	        	.fromCurrentRequest()
@@ -93,7 +94,7 @@ public class PostResource {
 
 	}
 	
-	@RequestMapping(value = "/{id}", method=RequestMethod.DELETE)
+	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> delete(@PathVariable String id){
 		service.delete(id);
 		return ResponseEntity.noContent().build();
