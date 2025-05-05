@@ -51,7 +51,7 @@ public class CommentResource {
 	}
 	
 	@GetMapping(value = "/{id}")
- 	public ResponseEntity<Comment> findById(@PathVariable String id) {
+ 	public ResponseEntity<Comment> findByIdComplete(@PathVariable String id) {
  	    Comment Comment = service.findById(id); 
  	    return ResponseEntity.ok(Comment);
  	}
@@ -76,7 +76,7 @@ public class CommentResource {
 	  
 	    AuthorDTO author = criadorDeAuthorDTO.retornaAuthorDTO(matriculaDoAutor);
 	    Comment comment = new Comment(commentDescription, author, idDoPost);
-	    comment = service.saveComment(comment); 
+	    comment = service.saveComment(comment); //tlz seja melhor mudar isso de função
 	    URI uri = ServletUriComponentsBuilder
 	        	.fromCurrentRequest()
 	            .path("/{id}")  

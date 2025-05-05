@@ -1,6 +1,7 @@
   package com.myllamedeiros.projectmap.services;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -72,6 +73,8 @@ public class UserService {
 	    if (newObj.getDenuncias() != null) {
 			inicialObj.setDenuncias(newObj.getDenuncias()); 
 	    }
+	    
+	    inicialObj.setDataCriacao(new Date());
 	}
 	
 	public void updateListaDePosts(User user) {

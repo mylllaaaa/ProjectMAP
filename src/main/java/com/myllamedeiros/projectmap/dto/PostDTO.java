@@ -14,7 +14,7 @@ public class PostDTO implements Serializable {
 	private Date data;
 	private AuthorDTO author;
 	private String imagemUrl;
-	
+
 	public PostDTO() {
 	}
 
