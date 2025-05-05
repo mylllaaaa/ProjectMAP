@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.myllamedeiros.projectmap.domain.Post;
 import com.myllamedeiros.projectmap.domain.User;
 import com.myllamedeiros.projectmap.dto.UserDTO;
 import com.myllamedeiros.projectmap.services.UserService;

@@ -25,6 +25,7 @@ import com.myllamedeiros.projectmap.domain.Post;
 import com.myllamedeiros.projectmap.dto.AuthorDTO;
 import com.myllamedeiros.projectmap.dto.PostDTO;
 import com.myllamedeiros.projectmap.services.PostService;
+import com.myllamedeiros.projectmap.util.AtualizadorDePostagens;
 import com.myllamedeiros.projectmap.util.CriadorDeUsuarioDTO;
 
 @RestController
@@ -36,6 +37,9 @@ public class PostResource {
 	
 	@Autowired
 	private CriadorDeUsuarioDTO criadorDeAuthorDTO;
+	
+	@Autowired
+	private AtualizadorDePostagens atualizadorDePostagens;
 	
 	@GetMapping()
 	public ResponseEntity<List<Post>> findAll(){
@@ -83,7 +87,7 @@ public class PostResource {
 	            .path("/{id}")  
 	            .buildAndExpand(post.getId())
 	            .toUri();
-	        
+	        atualizadorDePostagens.atualizarListaDePosts(matriculaDoAutor, post);
 	        return ResponseEntity.created(uri).build(); 
 	    } catch (IOException e) {
 	        System.out.print("Erro ao salvar post: " + e.getMessage());

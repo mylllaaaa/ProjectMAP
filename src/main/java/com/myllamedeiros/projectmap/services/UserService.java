@@ -73,4 +73,8 @@ public class UserService {
 			inicialObj.setDenuncias(newObj.getDenuncias()); 
 	    }
 	}
+	
+	public void updateListaDePosts(User user) {
+		rep.save(user);
+	}
 }

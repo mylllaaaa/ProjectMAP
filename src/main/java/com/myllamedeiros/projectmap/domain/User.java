@@ -2,9 +2,12 @@ package com.myllamedeiros.projectmap.domain;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Objects;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.data.mongodb.core.mapping.FieldType;
@@ -31,6 +34,9 @@ public class User implements Serializable {
 	
 	@Field(targetType = FieldType.BINARY) 
     private byte[] imagem;	
+	
+	@DBRef(lazy = true)
+	private List<Post> posts =  new LinkedList<>();
 
 	public User(String matricula, String nome, String nomeDeUsuario, String email, Campus campus, Curso curso, Date dataNascimento, String senha, String descricao) {
 		super();
@@ -133,6 +139,14 @@ public class User implements Serializable {
 
 	public void setImagem(byte[] imagem) {
 		this.imagem = imagem;
+	}
+	
+	public List<Post> getPosts() {
+		return posts;
+	}
+
+	public void setPosts(List<Post> posts) {
+		this.posts = posts;
 	}
 
 	@Override
