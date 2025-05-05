@@ -3,9 +3,6 @@ package com.myllamedeiros.projectmap.dto;
 import java.io.Serializable;
 import java.util.Date;
 
-import org.springframework.data.mongodb.core.mapping.Field;
-import org.springframework.data.mongodb.core.mapping.FieldType;
-
 import com.myllamedeiros.projectmap.domain.Post;
 
 public class PostDTO implements Serializable {

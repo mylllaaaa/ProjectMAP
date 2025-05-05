@@ -54,18 +54,15 @@ public class PostResource {
 		return ResponseEntity.ok().body(listDTO);
 	}
 	
-	@GetMapping(value = "/{id}")
- 	public ResponseEntity<Post> findById(@PathVariable String id) {
- 	    Post post = service.findById(id); 
- 	    return ResponseEntity.ok(post);
+	@GetMapping(value = "/{id}/complete")
+ 	public ResponseEntity<Post> findByIdComplete(@PathVariable String id) {
+ 	    return ResponseEntity.ok(service.findById(id));
  	}
 	
 	@GetMapping(value = "/{id}/dto")
  	public ResponseEntity<PostDTO> findByIdDTO(@PathVariable String id) {
  	    Post post = service.findById(id);
- 	    PostDTO postDTO = new PostDTO(post);
- 
- 	    return ResponseEntity.ok(postDTO);
+ 	    return ResponseEntity.ok(new PostDTO(post));
  	}
 	
 	@PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -103,7 +100,6 @@ public class PostResource {
 	            .contentType(MediaType.IMAGE_JPEG) 
 	            .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"imagem.jpg\"")
 	            .body(post.getImagem());
-
 	}
 
 	@DeleteMapping(value = "/{id}")

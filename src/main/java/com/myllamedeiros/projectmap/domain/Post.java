@@ -2,9 +2,12 @@ package com.myllamedeiros.projectmap.domain;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Objects;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.data.mongodb.core.mapping.FieldType;
@@ -28,6 +31,9 @@ public class Post implements Serializable {
 	@Field(targetType = FieldType.BINARY) 
     private byte[] imagem;	
 	
+	@DBRef(lazy = true)
+	private List<Comment> comments =  new LinkedList<>();
+	
 	public Post() {
 		
 	}
@@ -37,9 +43,12 @@ public class Post implements Serializable {
 	   this.descricao = descricao;
 	   curtidas = 0;
 	   denuncias = 0;
+	   setAutor(author);
+	   setDenuncias(0);;
 	   setData(new Date());
 	   this.author = author;
 	}
+	
 	public String getId() {
 		return id;
 	}
@@ -78,10 +87,6 @@ public class Post implements Serializable {
     public void setImagem(byte[] imagem) {
         this.imagem = imagem;
     }
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
 	
 	public Integer getDenuncias() {
 		return denuncias;
@@ -107,6 +112,10 @@ public class Post implements Serializable {
 		this.author = author;
 	}
 	
+	public List<Comment> getComments() {
+		return comments;
+	}
+
 	public String imagemFilePath() {
 		String imagemUrl = ServletUriComponentsBuilder
      	        .fromCurrentContextPath()

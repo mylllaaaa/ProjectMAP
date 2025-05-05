@@ -40,16 +40,16 @@ public class UserResource {
 		List<UserDTO> listDTO = list.stream().map(x -> new UserDTO(x)).collect(Collectors.toList());
 		return ResponseEntity.ok().body(listDTO);
 	}
-	  
-	@RequestMapping(value = "/{id}", method=RequestMethod.GET)
-	public ResponseEntity<UserDTO> findById(@PathVariable String id){
-		User obj = service.findById(id);
-		return ResponseEntity.ok().body(new UserDTO(obj));
-	}
 	
 	@RequestMapping(value = "/{id}/complete", method=RequestMethod.GET)
 	public ResponseEntity<User> findByIdComplete(@PathVariable String id){
 		return ResponseEntity.ok().body(service.findById(id));
+	}
+	
+	@RequestMapping(value = "/{id}", method=RequestMethod.GET)
+	public ResponseEntity<UserDTO> findByIdDTO(@PathVariable String id){
+		User obj = service.findById(id);
+		return ResponseEntity.ok().body(new UserDTO(obj));
 	}
 	
 	@PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)

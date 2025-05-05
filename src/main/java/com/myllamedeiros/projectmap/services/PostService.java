@@ -57,4 +57,8 @@ public class PostService {
 	    
 	    inicialObj.setData(new Date());
 	}
+	
+	public void updateListaDeComments(Post post) {
+		rep.save(post);
+	}
 }
