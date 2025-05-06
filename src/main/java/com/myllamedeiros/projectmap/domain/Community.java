@@ -1,10 +1,8 @@
 package com.myllamedeiros.projectmap.domain;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -26,8 +24,7 @@ public class Community implements Serializable {
 	private Campus campus;
 	private Date dataCriacao;
 	
-	@DBRef(lazy = true)
-	private List<User> users = new ArrayList<>();
+	private Set<String> usersIds = new LinkedHashSet<>();
 	
 	@DBRef(lazy = true)
 	private Set<Post> posts = new LinkedHashSet<>();
@@ -71,8 +68,8 @@ public class Community implements Serializable {
 		this.descricao = descricao;
 	}
 	
-	public List<User> getUsers() {
-		return users;
+	public Set<String> getUsersIds() {
+		return usersIds;
 	}
 
 	public Set<Post> getPosts() {

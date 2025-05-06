@@ -1,7 +1,5 @@
 package com.myllamedeiros.projectmap.util;
 
-import java.util.Arrays;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -11,7 +9,7 @@ import com.myllamedeiros.projectmap.services.CommunityService;
 import com.myllamedeiros.projectmap.services.UserService;
 
 @Component
-public class AtualizadorDeUsers {
+public class AtualizadorDeUsersECommunity {
 	
 	@Autowired 
 	private UserService userService;
@@ -19,13 +17,14 @@ public class AtualizadorDeUsers {
 	@Autowired 
 	private CommunityService comService;
 	
-	public void atualizarListaDeUsers(String matricula, String id) {
+	public void atualizadorDeUsersECommunity(String matricula, String id) {
 		User user = userService.findById(matricula);
 		Community comm = comService.findById(id);
 		
-		//user.getCommunities().addAll(Arrays.asList(comm));
-		comm.getUsers().addAll(Arrays.asList(user));
+		user.getCommunitiesIds().add(id);
+		comm.getUsersIds().add(matricula);
 		
+		userService.atualizadorDeCommunity(user);
 		comService.atualizadorDeUsers(comm);
 	}
 }

@@ -27,7 +27,7 @@ import com.myllamedeiros.projectmap.dto.UserDTO;
 import com.myllamedeiros.projectmap.enums.Campus;
 import com.myllamedeiros.projectmap.enums.Curso;
 import com.myllamedeiros.projectmap.services.UserService;
-import com.myllamedeiros.projectmap.util.AtualizadorDeUsers;
+import com.myllamedeiros.projectmap.util.AtualizadorDeUsersECommunity;
 
 @RestController
 @RequestMapping(value = "/users")
@@ -37,7 +37,7 @@ public class UserResource {
 	private UserService service;
 	
 	@Autowired
-	private AtualizadorDeUsers atualizadorDeUsers;
+	private AtualizadorDeUsersECommunity atualizadorDeUsersECommunity;
 
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<UserDTO>> findAll() {
@@ -107,7 +107,7 @@ public class UserResource {
 	
 	@PatchMapping("{matricula}/community/{id}")
 	public ResponseEntity<Void> updateListaComunidades(@PathVariable String matricula, @PathVariable String id){
-		atualizadorDeUsers.atualizarListaDeUsers(matricula, id);
+		atualizadorDeUsersECommunity.atualizadorDeUsersECommunity(matricula, id);
 		return ResponseEntity.noContent().build();
 	}
 
