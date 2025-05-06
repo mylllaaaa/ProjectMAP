@@ -1,10 +1,12 @@
 package com.myllamedeiros.projectmap.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.LinkedList;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -25,10 +27,10 @@ public class Community implements Serializable {
 	private Date dataCriacao;
 	
 	@DBRef(lazy = true)
-	private List<User> users =  new LinkedList<>();
+	private List<User> users = new ArrayList<>();
 	
 	@DBRef(lazy = true)
-	private List<Post> posts =  new LinkedList<>();
+	private Set<Post> posts = new LinkedHashSet<>();
 	
 	@Field(targetType = FieldType.BINARY) 
     private byte[] imagem;	
@@ -68,21 +70,13 @@ public class Community implements Serializable {
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
-
+	
 	public List<User> getUsers() {
 		return users;
 	}
 
-	public void setUsuarios(List<User> users) {
-		this.users = users;
-	}
-
-	public List<Post> getPosts() {
+	public Set<Post> getPosts() {
 		return posts;
-	}
-
-	public void setPosts(List<Post> posts) {
-		this.posts = posts;
 	}
 
 	public byte[] getImagem() {

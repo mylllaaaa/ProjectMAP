@@ -3,7 +3,6 @@ package com.myllamedeiros.projectmap.resources;
 import java.io.IOException;
 import java.net.URI;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -36,10 +35,10 @@ public class CommunityResource {
 	private CommunityService service;
 	
 	@GetMapping
-	public ResponseEntity<List<CommunityDTO>> findAll(){
+	public ResponseEntity<List<Community>> findAll(){
 		List<Community> list = service.findAll();
-		List<CommunityDTO> listDTO = list.stream().map(x -> new CommunityDTO(x)).collect(Collectors.toList());
-		return ResponseEntity.ok().body(listDTO);
+		//List<CommunityDTO> listDTO = list.stream().map(x -> new CommunityDTO(x)).collect(Collectors.toList());
+		return ResponseEntity.ok().body(list);
 	}
 	
 	@GetMapping(value = "/{id}")
@@ -101,4 +100,5 @@ public class CommunityResource {
 		newCommunity = service.update(newCommunity, id);
 		return ResponseEntity.noContent().build();
 	}
+
 }

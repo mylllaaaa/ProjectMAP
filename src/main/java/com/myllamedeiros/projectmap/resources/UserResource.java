@@ -27,96 +27,88 @@ import com.myllamedeiros.projectmap.dto.UserDTO;
 import com.myllamedeiros.projectmap.enums.Campus;
 import com.myllamedeiros.projectmap.enums.Curso;
 import com.myllamedeiros.projectmap.services.UserService;
-import com.myllamedeiros.projectmap.util.AtualizadorDeUsersECommunity;
-
-
+import com.myllamedeiros.projectmap.util.AtualizadorDeUsers;
 
 @RestController
-@RequestMapping(value="/users")
+@RequestMapping(value = "/users")
 public class UserResource {
 
 	@Autowired
 	private UserService service;
 	
 	@Autowired
-	private AtualizadorDeUsersECommunity atualizadorDeUsersECommunity;
-	
-	@RequestMapping(method=RequestMethod.GET)
-	public ResponseEntity<List<UserDTO>> findAll(){
+	private AtualizadorDeUsers atualizadorDeUsers;
+
+	@RequestMapping(method = RequestMethod.GET)
+	public ResponseEntity<List<UserDTO>> findAll() {
 		List<User> list = service.findAll();
 		List<UserDTO> listDTO = list.stream().map(x -> new UserDTO(x)).collect(Collectors.toList());
 		return ResponseEntity.ok().body(listDTO);
 	}
-	
-	@RequestMapping(value = "/{id}", method=RequestMethod.GET)
-	public ResponseEntity<User> findByIdComplete(@PathVariable String id){
+
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	public ResponseEntity<User> findByIdComplete(@PathVariable String id) {
 		return ResponseEntity.ok().body(service.findById(id));
 	}
-	
-	@RequestMapping(value = "/{id}/dto", method=RequestMethod.GET)
-	public ResponseEntity<UserDTO> findByIdDTO(@PathVariable String id){
+
+	@RequestMapping(value = "/{id}/dto", method = RequestMethod.GET)
+	public ResponseEntity<UserDTO> findByIdDTO(@PathVariable String id) {
 		User obj = service.findById(id);
 		return ResponseEntity.ok().body(new UserDTO(obj));
 	}
-	
+
 	@PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-	public ResponseEntity<Void> insert(
-			@RequestParam("matricula") String matricula,
-			@RequestParam("nome") String nome,
-			@RequestParam("nomeDeUsuario") String nomeDeUsuario,
-			@RequestParam("email") String email,
-			@RequestParam("campus") Campus campus,
-			@RequestParam("curso") Curso curso,
-			@RequestParam("dataNascimento") Date dataNascimento,
-			@RequestParam("senha") String senha,
-			@RequestParam("descricao") String descricao,
-			@RequestParam("imagem") MultipartFile imagem){
-		
-		if(matricula.isBlank() || nome.isBlank() || nomeDeUsuario.isBlank() || email.isBlank() || campus == null || curso == null || dataNascimento == null || senha.isBlank() || descricao.isBlank() || imagem == null) {
-			return ResponseEntity.badRequest().build(); 
+	public ResponseEntity<Void> insert(@RequestParam("matricula") String matricula, @RequestParam("nome") String nome,
+			@RequestParam("nomeDeUsuario") String nomeDeUsuario, @RequestParam("email") String email,
+			@RequestParam("campus") Campus campus, @RequestParam("curso") Curso curso,
+			@RequestParam("dataNascimento") Date dataNascimento, @RequestParam("senha") String senha,
+			@RequestParam("descricao") String descricao, @RequestParam("imagem") MultipartFile imagem) {
+
+		if (matricula.isBlank() || nome.isBlank() || nomeDeUsuario.isBlank() || email.isBlank() || campus == null
+				|| curso == null || dataNascimento == null || senha.isBlank() || descricao.isBlank()
+				|| imagem == null) {
+			return ResponseEntity.badRequest().build();
 		}
-		
-	    try {
-	    	User obj = service.insert(new User(matricula, nome, nomeDeUsuario, email, campus, curso, dataNascimento, senha, descricao), imagem);
-	        
-	        URI uri = ServletUriComponentsBuilder
-	        	.fromCurrentRequest()
-	            .path("/{id}")  
-	            .buildAndExpand(obj.getMatricula())
-	            .toUri();
-	        
-	        return ResponseEntity.created(uri).build(); 
-	    } catch (IOException e) {
-	        System.out.print("Erro ao salvar user: " + e.getMessage());
-	        return ResponseEntity.internalServerError().build(); 
-	    } 
+
+		try {
+			User obj = service.insert(
+					new User(matricula, nome, nomeDeUsuario, email, campus, curso, dataNascimento, senha, descricao),
+					imagem);
+
+			URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getMatricula())
+					.toUri();
+
+			return ResponseEntity.created(uri).build();
+		} catch (IOException e) {
+			System.out.print("Erro ao salvar user: " + e.getMessage());
+			return ResponseEntity.internalServerError().build();
+		}
 	}
-	
+
 	@GetMapping("/{id}/imagem")
 	public ResponseEntity<byte[]> getImagem(@PathVariable String id) {
-	    User user = service.findById(id);
-	    
-	    return ResponseEntity.ok()
-	            .contentType(MediaType.IMAGE_JPEG) 
-	            .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"imagem.jpg\"")
-	            .body(user.getImagem());
+		User user = service.findById(id);
+
+		return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG)
+				.header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"imagem.jpg\"").body(user.getImagem());
 	}
-	
-	@RequestMapping(value = "/{id}", method=RequestMethod.DELETE)
-	public ResponseEntity<Void> delete(@PathVariable String id){
+
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity<Void> delete(@PathVariable String id) {
 		service.delete(id);
 		return ResponseEntity.noContent().build();
 	}
-	
+
 	@PatchMapping("/{id}")
-	public ResponseEntity<Void> update(@RequestBody User newUser, @PathVariable String id){
+	public ResponseEntity<Void> update(@RequestBody User newUser, @PathVariable String id) {
 		newUser = service.update(newUser, id);
 		return ResponseEntity.noContent().build();
 	}
 	
-	@PatchMapping("/{id}/communities")
+	@PatchMapping("{matricula}/community/{id}")
 	public ResponseEntity<Void> updateListaComunidades(@PathVariable String matricula, @PathVariable String id){
-		atualizadorDeUsersECommunity.atualizarListaDeUsersECommunity(matricula, id);
+		atualizadorDeUsers.atualizarListaDeUsers(matricula, id);
 		return ResponseEntity.noContent().build();
 	}
+
 }
