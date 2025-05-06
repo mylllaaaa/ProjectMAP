@@ -49,7 +49,7 @@ public class User implements Serializable {
 		this.dataNascimento = dataNascimento;
 		this.senha = senha;
 		this.descricao =  descricao;
-		this.denuncias = 0;
+		setDenuncias(0);
 		setDataCriacao(new Date());
 	}
 

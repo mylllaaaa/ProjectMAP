@@ -8,9 +8,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 
 import com.myllamedeiros.projectmap.domain.Community;
-import com.myllamedeiros.projectmap.domain.Post;
 import com.myllamedeiros.projectmap.domain.User;
-import com.myllamedeiros.projectmap.dto.AuthorDTO;
 import com.myllamedeiros.projectmap.enums.Campus;
 import com.myllamedeiros.projectmap.enums.Curso;
 import com.myllamedeiros.projectmap.repository.CommunityRepository;
@@ -41,8 +39,9 @@ public class Instantiation implements CommandLineRunner{
 		User lyria = new User("0158489852315", "Lyria of Lagalos", "Piggy","lyria@gmail.com", Campus.CAMPUSVII, Curso.COMPUTACAO, sdf.parse("12/05/2005"), "789", "A Red");
 
 		Community com1 = new Community("ASOAIF", "Melhor saga de fantasia do mundo", Campus.CAMPUSV);
+		Community com2 = new Community("RED RISING", "Melhor saga de Sci-fi do mundo", Campus.CAMPUSV);
 		
 		userRepository.saveAll(Arrays.asList(pax, electra, lyria));
-		comRepository.saveAll(Arrays.asList(com1));
+		comRepository.saveAll(Arrays.asList(com1, com2));
 	}
 }

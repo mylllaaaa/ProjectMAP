@@ -2,6 +2,7 @@ package com.myllamedeiros.projectmap.resources;
 
 import java.io.IOException;
 import java.net.URI;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -16,13 +17,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.myllamedeiros.projectmap.domain.User;
 import com.myllamedeiros.projectmap.dto.UserDTO;
+import com.myllamedeiros.projectmap.enums.Campus;
+import com.myllamedeiros.projectmap.enums.Curso;
 import com.myllamedeiros.projectmap.services.UserService;
 
 
@@ -41,12 +44,12 @@ public class UserResource {
 		return ResponseEntity.ok().body(listDTO);
 	}
 	
-	@RequestMapping(value = "/{id}/complete", method=RequestMethod.GET)
+	@RequestMapping(value = "/{id}", method=RequestMethod.GET)
 	public ResponseEntity<User> findByIdComplete(@PathVariable String id){
 		return ResponseEntity.ok().body(service.findById(id));
 	}
 	
-	@RequestMapping(value = "/{id}", method=RequestMethod.GET)
+	@RequestMapping(value = "/{id}/dto", method=RequestMethod.GET)
 	public ResponseEntity<UserDTO> findByIdDTO(@PathVariable String id){
 		User obj = service.findById(id);
 		return ResponseEntity.ok().body(new UserDTO(obj));
@@ -54,10 +57,18 @@ public class UserResource {
 	
 	@PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ResponseEntity<Void> insert(
-			@RequestPart("user") User user, 
-			@RequestPart("imagem") MultipartFile imagem){
+			@RequestParam("matricula") String matricula,
+			@RequestParam("nome") String nome,
+			@RequestParam("nomeDeUsuario") String nomeDeUsuario,
+			@RequestParam("email") String email,
+			@RequestParam("campus") Campus campus,
+			@RequestParam("curso") Curso curso,
+			@RequestParam("dataNascimento") Date dataNascimento,
+			@RequestParam("senha") String senha,
+			@RequestParam("descricao") String descricao,
+			@RequestParam("imagem") MultipartFile imagem){
 	    try {
-	    	User obj = service.insert(user, imagem);
+	    	User obj = service.insert(new User(matricula, nome, nomeDeUsuario, email, campus, curso, dataNascimento, senha, descricao), imagem);
 	        
 	        URI uri = ServletUriComponentsBuilder
 	        	.fromCurrentRequest()
