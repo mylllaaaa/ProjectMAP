@@ -38,6 +38,9 @@ public class User implements Serializable {
 	@DBRef(lazy = true)
 	private List<Post> posts =  new LinkedList<>();
 	
+	@DBRef(lazy = true)
+	private List<Comment> comments =  new LinkedList<>();
+	
 	@Field(targetType = FieldType.BINARY) 
     private byte[] imagem;	
 
@@ -150,6 +153,10 @@ public class User implements Serializable {
 
 	public List<Community> getCommunities() {
 		return communities;
+	}
+
+	public List<Comment> getComments() {
+		return comments;
 	}
 
 	@Override

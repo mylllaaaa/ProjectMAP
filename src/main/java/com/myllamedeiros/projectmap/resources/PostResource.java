@@ -22,7 +22,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.myllamedeiros.projectmap.domain.Post;
-import com.myllamedeiros.projectmap.dto.AuthorDTO;
 import com.myllamedeiros.projectmap.dto.PostDTO;
 import com.myllamedeiros.projectmap.services.PostService;
 import com.myllamedeiros.projectmap.util.AtualizadorDePostagens;
@@ -72,13 +71,14 @@ public class PostResource {
 		@RequestParam("matricula") String matriculaDoAutor,
 		@RequestParam(required = true) MultipartFile imagem) {
 		
-		if (imagem.isEmpty() || postTitle == null || postDescription == null || matriculaDoAutor == null) {
+		if (imagem.isEmpty() || postTitle.isBlank() || postDescription.isBlank() || matriculaDoAutor.isBlank()) {
 	        return ResponseEntity.badRequest().build(); 
 	    }
+		
 	    try {
-	    	AuthorDTO author = criadorDeAuthorDTO.retornaAuthorDTO(matriculaDoAutor);
-	    	Post post = new Post(postTitle, postDescription, author);
+	    	Post post = new Post(postTitle, postDescription, criadorDeAuthorDTO.retornaAuthorDTO(matriculaDoAutor));
 	        post = service.savePost(post, imagem);
+	        
 	        URI uri = ServletUriComponentsBuilder
 	        	.fromCurrentRequest()
 	            .path("/{id}")  

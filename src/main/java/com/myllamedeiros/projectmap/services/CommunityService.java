@@ -32,7 +32,7 @@ public class CommunityService {
 		Comunity.setImagem(imagem.getBytes());
 		return rep.insert(Comunity);
 	}
-	
+		
 	public void delete(String id) {
 		findById(id);
 		rep.deleteById(id);
@@ -51,7 +51,11 @@ public class CommunityService {
 	   inicialObj.setDataCriacao(new Date());
 	}
 	
-	public void updateListaDePosts(Community Comunity) {
-		rep.save(Comunity);
+	public void updateListaDePosts(Community community) {
+		rep.save(community);
+	}
+	
+	public void atualizadorDeUsers(Community community) {
+		rep.save(community);
 	}
 }

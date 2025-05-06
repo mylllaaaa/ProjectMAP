@@ -80,4 +80,8 @@ public class UserService {
 	public void updateListaDePosts(User user) {
 		rep.save(user);
 	}
+	
+	public void atualizadorDeCommunity(User user) {
+		rep.save(user);
+	}
 }

@@ -11,7 +11,6 @@ public class CommentDTO implements Serializable {
 
 	private String descricao;
 	private Integer curtidas;
-	private Integer denuncias; 
 	private AuthorDTO author;
 	private Date data;
 	
@@ -22,7 +21,6 @@ public class CommentDTO implements Serializable {
 	public CommentDTO(Comment comment) {
 		setDescricao(comment.getDescricao());
 		setCurtidas(comment.getCurtidas());
-		setDenuncias(comment.getDenuncias());
 		setAuthor(comment.getAuthor());
 		setData(comment.getData());
 	}
@@ -33,10 +31,6 @@ public class CommentDTO implements Serializable {
 
 	public Integer getCurtidas() {
 		return curtidas;
-	}
-
-	public Integer getDenuncias() {
-		return denuncias;
 	}
 
 	public AuthorDTO getAuthor() {
@@ -53,10 +47,6 @@ public class CommentDTO implements Serializable {
 
 	public void setCurtidas(Integer curtidas) {
 		this.curtidas = curtidas;
-	}
-
-	public void setDenuncias(Integer denuncias) {
-		this.denuncias = denuncias;
 	}
 
 	public void setAuthor(AuthorDTO author) {

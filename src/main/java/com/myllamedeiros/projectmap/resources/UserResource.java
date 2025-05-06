@@ -27,6 +27,7 @@ import com.myllamedeiros.projectmap.dto.UserDTO;
 import com.myllamedeiros.projectmap.enums.Campus;
 import com.myllamedeiros.projectmap.enums.Curso;
 import com.myllamedeiros.projectmap.services.UserService;
+import com.myllamedeiros.projectmap.util.AtualizadorDeUsersECommunity;
 
 
 
@@ -36,6 +37,9 @@ public class UserResource {
 
 	@Autowired
 	private UserService service;
+	
+	@Autowired
+	private AtualizadorDeUsersECommunity atualizadorDeUsersECommunity;
 	
 	@RequestMapping(method=RequestMethod.GET)
 	public ResponseEntity<List<UserDTO>> findAll(){
@@ -67,6 +71,11 @@ public class UserResource {
 			@RequestParam("senha") String senha,
 			@RequestParam("descricao") String descricao,
 			@RequestParam("imagem") MultipartFile imagem){
+		
+		if(matricula.isBlank() || nome.isBlank() || nomeDeUsuario.isBlank() || email.isBlank() || campus == null || curso == null || dataNascimento == null || senha.isBlank() || descricao.isBlank() || imagem == null) {
+			return ResponseEntity.badRequest().build(); 
+		}
+		
 	    try {
 	    	User obj = service.insert(new User(matricula, nome, nomeDeUsuario, email, campus, curso, dataNascimento, senha, descricao), imagem);
 	        
@@ -102,6 +111,12 @@ public class UserResource {
 	@PatchMapping("/{id}")
 	public ResponseEntity<Void> update(@RequestBody User newUser, @PathVariable String id){
 		newUser = service.update(newUser, id);
+		return ResponseEntity.noContent().build();
+	}
+	
+	@PatchMapping("/{id}/communities")
+	public ResponseEntity<Void> updateListaComunidades(@PathVariable String matricula, @PathVariable String id){
+		atualizadorDeUsersECommunity.atualizarListaDeUsersECommunity(matricula, id);
 		return ResponseEntity.noContent().build();
 	}
 }
