@@ -32,11 +32,14 @@ public class User implements Serializable {
 	private String descricao;
 	private Date dataCriacao;
 	
-	@Field(targetType = FieldType.BINARY) 
-    private byte[] imagem;	
+	@DBRef(lazy = true)
+	private List<Community> communities = new LinkedList<>();
 	
 	@DBRef(lazy = true)
 	private List<Post> posts =  new LinkedList<>();
+	
+	@Field(targetType = FieldType.BINARY) 
+    private byte[] imagem;	
 
 	public User(String matricula, String nome, String nomeDeUsuario, String email, Campus campus, Curso curso, Date dataNascimento, String senha, String descricao) {
 		super();
@@ -143,6 +146,10 @@ public class User implements Serializable {
 	
 	public List<Post> getPosts() {
 		return posts;
+	}
+
+	public List<Community> getCommunities() {
+		return communities;
 	}
 
 	@Override

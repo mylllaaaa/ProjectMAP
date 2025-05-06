@@ -1,12 +1,13 @@
 package com.myllamedeiros.projectmap.domain;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.data.mongodb.core.mapping.FieldType;
 
@@ -21,9 +22,13 @@ public class Community implements Serializable {
 	private String nome;
 	private String descricao;
 	private Campus campus;
-	private List<User> usuarios = new ArrayList<>();
-	private List<Post> posts = new ArrayList<>();
 	private Date dataCriacao;
+	
+	@DBRef(lazy = true)
+	private List<User> users =  new LinkedList<>();
+	
+	@DBRef(lazy = true)
+	private List<Post> posts =  new LinkedList<>();
 	
 	@Field(targetType = FieldType.BINARY) 
     private byte[] imagem;	
@@ -64,12 +69,12 @@ public class Community implements Serializable {
 		this.descricao = descricao;
 	}
 
-	public List<User> getUsuarios() {
-		return usuarios;
+	public List<User> getUsers() {
+		return users;
 	}
 
-	public void setUsuarios(List<User> usuarios) {
-		this.usuarios = usuarios;
+	public void setUsuarios(List<User> users) {
+		this.users = users;
 	}
 
 	public List<Post> getPosts() {
