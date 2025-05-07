@@ -64,8 +64,8 @@ public class Comment implements Serializable {
 		return denuncias;
 	}
 
-	public void setDenuncias(Integer denuncias) {
-		this.denuncias = denuncias;
+	public void setDenuncias() {
+		denuncias += 1;
 	}
 
 	public AuthorDTO getAuthor() {

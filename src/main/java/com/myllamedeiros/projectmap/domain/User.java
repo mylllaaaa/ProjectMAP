@@ -54,7 +54,7 @@ public class User implements Serializable {
 		this.dataNascimento = dataNascimento;
 		this.senha = senha;
 		this.descricao =  descricao;
-		setDenuncias(0);
+		denuncias = 0;
 		setDataCriacao(new Date());
 	}
 
@@ -118,8 +118,8 @@ public class User implements Serializable {
 		return denuncias;
 	}
 
-	public void setDenuncias(Integer denuncias) {
-		this.denuncias = denuncias;
+	public void setDenuncias() {
+		denuncias += 1;
 	}
 	
 	public String getSenha() {

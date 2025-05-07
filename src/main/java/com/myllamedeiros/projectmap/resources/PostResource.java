@@ -123,4 +123,19 @@ public class PostResource {
 		service.updates(post);
 		return ResponseEntity.noContent().build();
 	}
+	
+	@PatchMapping("/{id}/denuncias")
+	public ResponseEntity<Void> denuncias(@PathVariable String id) {
+		Post post = service.findById(id);
+		
+		post.setDenuncias();
+		if(post.getDenuncias() >= 5) {
+			delete(id);
+		} else {
+			service.updates(post);
+		}
+		
+		return ResponseEntity.noContent().build();
+	}
+	
 }

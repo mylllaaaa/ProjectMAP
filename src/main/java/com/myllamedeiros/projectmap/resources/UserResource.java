@@ -129,4 +129,18 @@ public class UserResource {
 		return ResponseEntity.noContent().build();
 	}
 	
+	@PatchMapping("/{id}/denuncias")
+	public ResponseEntity<Void> denuncias(@PathVariable String id) {
+		User user = service.findById(id);
+		
+		user.setDenuncias();
+		if(user.getDenuncias() >= 5) {
+			delete(id);
+		} else {
+			service.updates(user);
+		}
+		
+		return ResponseEntity.noContent().build();
+	}
+	
 }

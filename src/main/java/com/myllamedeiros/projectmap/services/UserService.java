@@ -70,22 +70,11 @@ public class UserService {
 	    if (newObj.getDescricao() != null) {
 			inicialObj.setDescricao(newObj.getDescricao());
 	    }
-	    if (newObj.getDenuncias() != null) {
-			inicialObj.setDenuncias(newObj.getDenuncias()); 
-	    }
 	    
 	    inicialObj.setDataCriacao(new Date());
 	}
 	
-	public void updateListaDePosts(User user) {
-		rep.save(user);
-	}
-	
-	public void atualizadorDeCommunity(User user) {
-		rep.save(user);
-	}
-	
-	public void updateListaDeComments(User user) {
+	public void updates(User user) {
 		rep.save(user);
 	}
 }
