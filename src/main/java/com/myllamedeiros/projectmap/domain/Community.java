@@ -12,6 +12,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.data.mongodb.core.mapping.FieldType;
 
 import com.myllamedeiros.projectmap.enums.Campus;
+import com.myllamedeiros.projectmap.enums.Tags;
 
 public class Community implements Serializable {
 
@@ -28,6 +29,8 @@ public class Community implements Serializable {
 	
 	@DBRef(lazy = true)
 	private Set<Post> posts = new LinkedHashSet<>();
+	
+	private Set<Tags> tags = new LinkedHashSet<>();
 	
 	@Field(targetType = FieldType.BINARY) 
     private byte[] imagem;	
@@ -75,6 +78,10 @@ public class Community implements Serializable {
 	public Set<Post> getPosts() {
 		return posts;
 	}
+	
+	public Set<Tags> getTags() {
+		return tags;
+	}
 
 	public byte[] getImagem() {
 		return imagem;
@@ -83,7 +90,8 @@ public class Community implements Serializable {
 	public void setImagem(byte[] imagem) {
 		this.imagem = imagem;
 	}
-
+	
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);

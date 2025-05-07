@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -46,19 +45,19 @@ public class UserResource {
 	@Autowired
 	private ApresentarUsersECommunities apresentarUsersECommunities;
 
-	@RequestMapping(method = RequestMethod.GET)
+	@GetMapping
 	public ResponseEntity<List<UserDTO>> findAll() {
 		List<User> list = service.findAll();
 		List<UserDTO> listDTO = list.stream().map(x -> new UserDTO(x)).collect(Collectors.toList());
 		return ResponseEntity.ok().body(listDTO);
 	}
 
-	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	@GetMapping(value = "/{id}")
 	public ResponseEntity<User> findByIdComplete(@PathVariable String id) {
 		return ResponseEntity.ok().body(service.findById(id));
 	}
 
-	@RequestMapping(value = "/{id}/dto", method = RequestMethod.GET)
+	@GetMapping(value = "/{id}/dto")
 	public ResponseEntity<UserDTO> findByIdDTO(@PathVariable String id) {
 		User obj = service.findById(id);
 		return ResponseEntity.ok().body(new UserDTO(obj));
