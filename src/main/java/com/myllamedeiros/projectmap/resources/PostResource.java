@@ -69,6 +69,7 @@ public class PostResource {
 		@RequestParam("titulo") String postTitle,
 		@RequestParam("descricao") String postDescription,
 		@RequestParam("matricula") String matriculaDoAutor,
+		@RequestParam("id_comunidade") String idDaComunidade,
 		@RequestParam(required = true) MultipartFile imagem) {
 		
 		if (imagem.isEmpty() || postTitle.isBlank() || postDescription.isBlank() || matriculaDoAutor.isBlank()) {
@@ -76,7 +77,7 @@ public class PostResource {
 	    }
 		
 	    try {
-	    	Post post = new Post(postTitle, postDescription, criadorDeAuthorDTO.retornaAuthorDTO(matriculaDoAutor));
+	    	Post post = new Post(postTitle, postDescription, criadorDeAuthorDTO.retornaAuthorDTO(matriculaDoAutor), idDaComunidade);
 	        post = service.savePost(post, imagem);
 	        
 	        URI uri = ServletUriComponentsBuilder
@@ -84,7 +85,8 @@ public class PostResource {
 	            .path("/{id}")  
 	            .buildAndExpand(post.getId())
 	            .toUri();
-	        atualizadorDePostagens.atualizarListaDePosts(matriculaDoAutor, post);
+	        atualizadorDePostagens.atualizarListaDePostsDoUser(matriculaDoAutor, post);
+	        atualizadorDePostagens.atualizarListaDePostsDaComunidade(idDaComunidade, post);
 	        return ResponseEntity.created(uri).build(); 
 	    } catch (IOException e) {
 	        System.out.print("Erro ao salvar post: " + e.getMessage());

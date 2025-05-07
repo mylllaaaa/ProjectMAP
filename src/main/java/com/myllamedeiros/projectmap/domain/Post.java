@@ -2,9 +2,9 @@ package com.myllamedeiros.projectmap.domain;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.LinkedHashSet;
 import java.util.Objects;
+import java.util.Set;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -27,26 +27,26 @@ public class Post implements Serializable {
 	private Integer denuncias; 
 	private AuthorDTO author;
 	private Date data;
+	private String id_comunidade;
 	
 	@Field(targetType = FieldType.BINARY) 
     private byte[] imagem;	
 	
 	@DBRef(lazy = true)
-	private List<Comment> comments =  new LinkedList<>();
+	private Set<Comment> comments =  new LinkedHashSet<>();
 	
 	public Post() {
 		
 	}
 	
-	public Post(String titulo, String descricao, AuthorDTO author) {
+	public Post(String titulo, String descricao, AuthorDTO author, String id_comunidade) {
 	   this.titulo = titulo;
 	   this.descricao = descricao;
 	   curtidas = 0;
 	   denuncias = 0;
-	   setAutor(author);
-	   setDenuncias(0);;
-	   setData(new Date());
 	   this.author = author;
+	   data = new Date();
+	   this.id_comunidade = id_comunidade;
 	}
 	
 	public String getId() {
@@ -112,8 +112,20 @@ public class Post implements Serializable {
 		this.author = author;
 	}
 	
-	public List<Comment> getComments() {
+	public Set<Comment> getComments() {
 		return comments;
+	}
+	
+	public String getId_comunidade() {
+		return id_comunidade;
+	}
+
+	public void setId_comunidade(String id_comunidade) {
+		this.id_comunidade = id_comunidade;
+	}
+
+	public void setComments(Set<Comment> comments) {
+		this.comments = comments;
 	}
 
 	public String imagemFilePath() {

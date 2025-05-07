@@ -84,4 +84,8 @@ public class UserService {
 	public void atualizadorDeCommunity(User user) {
 		rep.save(user);
 	}
+	
+	public void updateListaDeComments(User user) {
+		rep.save(user);
+	}
 }

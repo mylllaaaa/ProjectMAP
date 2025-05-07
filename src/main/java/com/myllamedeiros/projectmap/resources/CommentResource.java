@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.myllamedeiros.projectmap.domain.Comment;
-import com.myllamedeiros.projectmap.dto.AuthorDTO;
 import com.myllamedeiros.projectmap.dto.CommentDTO;
 import com.myllamedeiros.projectmap.services.CommentService;
 import com.myllamedeiros.projectmap.util.AtualizadorDeComments;
@@ -74,8 +73,7 @@ public class CommentResource {
 	        return ResponseEntity.badRequest().build(); 
 	    }
 	  
-	    AuthorDTO author = criadorDeAuthorDTO.retornaAuthorDTO(matriculaDoAutor);
-	    Comment comment = new Comment(commentDescription, author, idDoPost);
+	    Comment comment = new Comment(commentDescription, criadorDeAuthorDTO.retornaAuthorDTO(matriculaDoAutor), idDoPost);
 	    comment = service.saveComment(comment); //tlz seja melhor mudar isso de função
 	    URI uri = ServletUriComponentsBuilder
 	        	.fromCurrentRequest()
@@ -83,8 +81,8 @@ public class CommentResource {
 	            .buildAndExpand(comment.getId())
 	            .toUri();
 	    
-	    atualizadorDeComments.atualizarListaDeComments(idDoPost, comment);
-	    
+	    atualizadorDeComments.atualizarListaDeCommentsDoPost(idDoPost, comment);
+	    atualizadorDeComments.atualizarListaDeCommentsDoUser(matriculaDoAutor, comment);
 	    return ResponseEntity.created(uri).build(); 
 	}
 
