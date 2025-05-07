@@ -2,6 +2,7 @@ package com.myllamedeiros.projectmap.config;
 
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.LinkedHashSet;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -48,8 +49,8 @@ public class Instantiation implements CommandLineRunner{
 		User lyria = new User("0158489852315", "Lyria of Lagalos", "Piggy","lyria@gmail.com", Campus.CAMPUSVII, Curso.COMPUTACAO, sdf.parse("12/05/2005"), "789", "A Red");
 		userRepository.saveAll(Arrays.asList(pax, electra, lyria));
 		
-		Community com1 = new Community("ASOAIF", "Melhor saga de fantasia do mundo", Campus.CAMPUSV);
-		Community com2 = new Community("RED RISING", "Melhor saga de Sci-fi do mundo", Campus.CAMPUSV);
+		Community com1 = new Community("ASOAIF", "Melhor saga de fantasia do mundo", Campus.CAMPUSV, new LinkedHashSet<>());
+		Community com2 = new Community("RED RISING", "Melhor saga de Sci-fi do mundo", Campus.CAMPUSV, new LinkedHashSet<>());
 		comRepository.saveAll(Arrays.asList(com1, com2));
 		
 		Post post = new Post("Indo ao espaço", "UHULLLLLLL", new AuthorDTO(pax), com2.getId());

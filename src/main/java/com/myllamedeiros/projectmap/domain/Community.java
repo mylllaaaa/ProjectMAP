@@ -24,14 +24,13 @@ public class Community implements Serializable {
 	private String descricao;
 	private Campus campus;
 	private Date dataCriacao;
+	private Set<Tags> tags;
 	
 	private Set<String> usersIds = new LinkedHashSet<>();
 	
 	@DBRef(lazy = true)
 	private Set<Post> posts = new LinkedHashSet<>();
-	
-	private Set<Tags> tags = new LinkedHashSet<>();
-	
+		
 	@Field(targetType = FieldType.BINARY) 
     private byte[] imagem;	
 
@@ -39,10 +38,11 @@ public class Community implements Serializable {
 		
 	}
 
-	public Community(String nome, String descricao, Campus campus) {
+	public Community(String nome, String descricao, Campus campus, Set<Tags> tags) {
 		super();
 		this.nome = nome;
 		this.descricao = descricao;
+		this.tags = tags;
 		this.setCampus(campus);
 		setDataCriacao(new Date());
 	}
