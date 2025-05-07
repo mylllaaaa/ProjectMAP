@@ -27,6 +27,6 @@ public class AtualizadorDeComments {
 	public void atualizarListaDeCommentsDoPost(String id, Comment comment) {
 		Post post = postService.findById(id);
 		post.getComments().add(comment);
-		postService.updateListaDeComments(post);
+		postService.updates(post);
 	}
 }

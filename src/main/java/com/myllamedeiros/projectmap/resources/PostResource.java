@@ -53,7 +53,7 @@ public class PostResource {
 		return ResponseEntity.ok().body(listDTO);
 	}
 	
-	@GetMapping(value = "/{id}/complete")
+	@GetMapping(value = "/{id}")
  	public ResponseEntity<Post> findByIdComplete(@PathVariable String id) {
  	    return ResponseEntity.ok(service.findById(id));
  	}
@@ -113,6 +113,14 @@ public class PostResource {
 	@PatchMapping(value = "/{id}")
 	public ResponseEntity<Void> update(@RequestBody Post newPost, @PathVariable String id){
 		newPost = service.update(newPost, id);
+		return ResponseEntity.noContent().build();
+	}
+	
+	@PatchMapping("/{id}/curtidas")
+	public ResponseEntity<Void> curtidas(@PathVariable String id) {
+		Post post = service.findById(id);
+		post.setCurtidas();
+		service.updates(post);
 		return ResponseEntity.noContent().build();
 	}
 }

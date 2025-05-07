@@ -47,4 +47,8 @@ public class CommentService {
 	    } 
 	    inicialObj.setData(new Date());
 	}
+	
+	public void updates(Comment comment) {
+		rep.save(comment);
+	}
 }

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.myllamedeiros.projectmap.domain.Comment;
+import com.myllamedeiros.projectmap.domain.Post;
 import com.myllamedeiros.projectmap.dto.CommentDTO;
 import com.myllamedeiros.projectmap.services.CommentService;
 import com.myllamedeiros.projectmap.util.AtualizadorDeComments;
@@ -95,6 +96,15 @@ public class CommentResource {
 	@PatchMapping(value = "/{id}")
 	public ResponseEntity<Void> update(@RequestBody Comment newComment, @PathVariable String id){
 		newComment = service.update(newComment, id);
+		return ResponseEntity.noContent().build();
+	}
+	
+
+	@PatchMapping("/{id}/curtidas")
+	public ResponseEntity<Void> curtidas(@PathVariable String id) {
+		Comment comment = service.findById(id);
+		comment.setCurtidas();
+		service.updates(comment);
 		return ResponseEntity.noContent().build();
 	}
 }

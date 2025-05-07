@@ -128,5 +128,5 @@ public class UserResource {
 		atualizadorDeUsersECommunity.atualizadorDeUsersECommunity(matricula, id);
 		return ResponseEntity.noContent().build();
 	}
-
+	
 }

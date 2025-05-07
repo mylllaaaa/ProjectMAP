@@ -31,8 +31,8 @@ public class Comment implements Serializable {
 		this.descricao = descricao;
 		this.author = author;
 		this.id_post = id_post;
-		setCurtidas(0);
-		setDenuncias(0);
+		curtidas = 0;
+		denuncias = 0;
 		setData(new Date());
 	}
 
@@ -56,8 +56,8 @@ public class Comment implements Serializable {
 		return curtidas;
 	}
 
-	public void setCurtidas(Integer curtidas) {
-		this.curtidas = curtidas;
+	public void setCurtidas() {
+		curtidas += 1;
 	}
 
 	public Integer getDenuncias() {
