@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,10 +24,12 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.myllamedeiros.projectmap.domain.User;
+import com.myllamedeiros.projectmap.dto.CommunityDTO;
 import com.myllamedeiros.projectmap.dto.UserDTO;
 import com.myllamedeiros.projectmap.enums.Campus;
 import com.myllamedeiros.projectmap.enums.Curso;
 import com.myllamedeiros.projectmap.services.UserService;
+import com.myllamedeiros.projectmap.util.ApresentarUsersECommunities;
 import com.myllamedeiros.projectmap.util.AtualizadorDeUsersECommunity;
 
 @RestController
@@ -38,6 +41,9 @@ public class UserResource {
 	
 	@Autowired
 	private AtualizadorDeUsersECommunity atualizadorDeUsersECommunity;
+	
+	@Autowired
+	private ApresentarUsersECommunities apresentarUsersECommunities;
 
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<UserDTO>> findAll() {
@@ -55,6 +61,18 @@ public class UserResource {
 	public ResponseEntity<UserDTO> findByIdDTO(@PathVariable String id) {
 		User obj = service.findById(id);
 		return ResponseEntity.ok().body(new UserDTO(obj));
+	}
+	
+	@GetMapping(value = "/{id}/communities")
+	public ResponseEntity<Set<String>> findCommunitiesIds(@PathVariable String id) {
+		User obj = service.findById(id);
+		return ResponseEntity.ok().body(obj.getCommunitiesIds());
+	}
+	
+	@GetMapping(value = "/{id}/communities/dto")
+	public ResponseEntity<List<CommunityDTO>> findCommunitiesIdsDto(@PathVariable String id) {
+		List<CommunityDTO> list = apresentarUsersECommunities.retornandoComunidades(id);
+		return ResponseEntity.ok().body(list);
 	}
 
 	@PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)

@@ -58,4 +58,5 @@ public class CommunityService {
 	public void atualizadorDeUsers(Community community) {
 		rep.save(community);
 	}
+
 }
