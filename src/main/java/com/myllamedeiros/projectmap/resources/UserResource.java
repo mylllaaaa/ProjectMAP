@@ -123,7 +123,7 @@ public class UserResource {
 		return ResponseEntity.noContent().build();
 	}
 	
-	@PatchMapping("{matricula}/community/{id}")
+	@PatchMapping("/{matricula}/community/{id}")
 	public ResponseEntity<Void> updateListaComunidades(@PathVariable String matricula, @PathVariable String id){
 		atualizadorDeUsersECommunity.atualizadorDeUsersECommunity(matricula, id);
 		return ResponseEntity.noContent().build();

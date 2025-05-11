@@ -24,6 +24,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.myllamedeiros.projectmap.domain.Post;
 import com.myllamedeiros.projectmap.dto.PostDTO;
 import com.myllamedeiros.projectmap.services.PostService;
+import com.myllamedeiros.projectmap.util.AtualizadorDeNotificacoes;
 import com.myllamedeiros.projectmap.util.AtualizadorDePostagens;
 import com.myllamedeiros.projectmap.util.CriadorDeUsuarioDTO;
 
@@ -39,6 +40,9 @@ public class PostResource {
 	
 	@Autowired
 	private AtualizadorDePostagens atualizadorDePostagens;
+	
+	@Autowired
+	private AtualizadorDeNotificacoes atualizadorDeNotificacoes;
 	
 	@GetMapping()
 	public ResponseEntity<List<Post>> findAll(){
@@ -87,6 +91,7 @@ public class PostResource {
 	            .toUri();
 	        atualizadorDePostagens.atualizarListaDePostsDoUser(matriculaDoAutor, post);
 	        atualizadorDePostagens.atualizarListaDePostsDaComunidade(idDaComunidade, post);
+	        atualizadorDeNotificacoes.notificacaoDeNovoPost(idDaComunidade);
 	        return ResponseEntity.created(uri).build(); 
 	    } catch (IOException e) {
 	        System.out.print("Erro ao salvar post: " + e.getMessage());

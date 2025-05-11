@@ -41,7 +41,7 @@ public class User implements Serializable {
 	@DBRef(lazy = true)
 	private Set<Comment> comments =  new LinkedHashSet<>();
 	
-	private Stack<String> notificacoes;
+	private Stack<String> notificacoes =  new Stack<>();
 	
 	@Field(targetType = FieldType.BINARY) 
     private byte[] imagem;	
