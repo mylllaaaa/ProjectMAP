@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.LinkedHashSet;
 import java.util.Objects;
 import java.util.Set;
+import java.util.Stack;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -39,6 +40,8 @@ public class User implements Serializable {
 	
 	@DBRef(lazy = true)
 	private Set<Comment> comments =  new LinkedHashSet<>();
+	
+	private Stack<String> notificacoes;
 	
 	@Field(targetType = FieldType.BINARY) 
     private byte[] imagem;	
@@ -156,6 +159,10 @@ public class User implements Serializable {
 
 	public Set<Comment> getComments() {
 		return comments;
+	}
+	
+	public Stack<String> getNotificacoes() {
+		return notificacoes;
 	}
 
 	@Override
