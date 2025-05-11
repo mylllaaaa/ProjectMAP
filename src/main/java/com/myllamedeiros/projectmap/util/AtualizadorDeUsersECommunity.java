@@ -24,7 +24,7 @@ public class AtualizadorDeUsersECommunity {
 		user.getCommunitiesIds().add(id);
 		comm.getUsersIds().add(matricula);
 		
-		userService.atualizadorDeCommunity(user);
+		userService.updates(user);
 		comService.atualizadorDeUsers(comm);
 	}
 }

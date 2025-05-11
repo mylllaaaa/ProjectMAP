@@ -76,8 +76,8 @@ public class Post implements Serializable {
 		return curtidas;
 	}
 
-	public void setCurtidas(Integer curtidas) {
-		this.curtidas = curtidas;
+	public void setCurtidas() {
+		curtidas += 1;
 	}
 
 	public byte[] getImagem() {
@@ -92,8 +92,8 @@ public class Post implements Serializable {
 		return denuncias;
 	}
 
-	public void setDenuncias(Integer denuncias) {
-		this.denuncias = denuncias;
+	public void setDenuncias() {
+		denuncias += 1;
 	}
 
 	public Date getData() {

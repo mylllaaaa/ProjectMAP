@@ -97,4 +97,27 @@ public class CommentResource {
 		newComment = service.update(newComment, id);
 		return ResponseEntity.noContent().build();
 	}
+	
+	@PatchMapping("/{id}/curtidas")
+	public ResponseEntity<Void> curtidas(@PathVariable String id) {
+		Comment comment = service.findById(id);
+		comment.setCurtidas();
+		service.updates(comment);
+		return ResponseEntity.noContent().build();
+	}
+	
+	@PatchMapping("/{id}/denuncias")
+	public ResponseEntity<Void> denuncias(@PathVariable String id) {
+		Comment comment = service.findById(id);
+		
+		comment.setDenuncias();
+		if(comment.getDenuncias() >= 5) {
+			delete(id);
+		} else {
+			service.updates(comment);
+		}
+		
+		return ResponseEntity.noContent().build();
+	}
+	
 }

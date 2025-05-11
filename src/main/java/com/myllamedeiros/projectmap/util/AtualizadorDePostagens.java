@@ -21,7 +21,7 @@ public class AtualizadorDePostagens {
 	public void atualizarListaDePostsDoUser(String matricula, Post post) {
 		User user = userService.findById(matricula);
 		user.getPosts().add(post);
-		userService.updateListaDePosts(user);
+		userService.updates(user);
 	}
 	
 	public void atualizarListaDePostsDaComunidade(String id, Post post) {

@@ -53,7 +53,7 @@ public class PostResource {
 		return ResponseEntity.ok().body(listDTO);
 	}
 	
-	@GetMapping(value = "/{id}/complete")
+	@GetMapping(value = "/{id}")
  	public ResponseEntity<Post> findByIdComplete(@PathVariable String id) {
  	    return ResponseEntity.ok(service.findById(id));
  	}
@@ -115,4 +115,27 @@ public class PostResource {
 		newPost = service.update(newPost, id);
 		return ResponseEntity.noContent().build();
 	}
+	
+	@PatchMapping("/{id}/curtidas")
+	public ResponseEntity<Void> curtidas(@PathVariable String id) {
+		Post post = service.findById(id);
+		post.setCurtidas();
+		service.updates(post);
+		return ResponseEntity.noContent().build();
+	}
+	
+	@PatchMapping("/{id}/denuncias")
+	public ResponseEntity<Void> denuncias(@PathVariable String id) {
+		Post post = service.findById(id);
+		
+		post.setDenuncias();
+		if(post.getDenuncias() >= 5) {
+			delete(id);
+		} else {
+			service.updates(post);
+		}
+		
+		return ResponseEntity.noContent().build();
+	}
+	
 }

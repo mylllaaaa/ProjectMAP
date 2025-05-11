@@ -21,12 +21,12 @@ public class AtualizadorDeComments {
 	public void atualizarListaDeCommentsDoUser(String id, Comment comment) {
 		User user = userService.findById(id);
 		user.getComments().add(comment);
-		userService.updateListaDeComments(user);
+		userService.updates(user);
 	}
 	
 	public void atualizarListaDeCommentsDoPost(String id, Comment comment) {
 		Post post = postService.findById(id);
 		post.getComments().add(comment);
-		postService.updateListaDeComments(post);
+		postService.updates(post);
 	}
 }

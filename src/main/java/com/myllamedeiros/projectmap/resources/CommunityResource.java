@@ -2,8 +2,10 @@ package com.myllamedeiros.projectmap.resources;
 
 import java.io.IOException;
 import java.net.URI;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -25,6 +27,7 @@ import com.myllamedeiros.projectmap.domain.Community;
 import com.myllamedeiros.projectmap.dto.CommunityDTO;
 import com.myllamedeiros.projectmap.dto.UserDTO;
 import com.myllamedeiros.projectmap.enums.Campus;
+import com.myllamedeiros.projectmap.enums.Tags;
 import com.myllamedeiros.projectmap.services.CommunityService;
 import com.myllamedeiros.projectmap.util.ApresentarUsersECommunities;
 
@@ -75,14 +78,20 @@ public class CommunityResource {
 			@RequestParam("nome") String nome, 
 			@RequestParam("descricao") String descricao,
 			@RequestParam("campus") Campus campus,
+			@RequestParam("tags") String tags,
 			@RequestParam("imagem") MultipartFile imagem){
 		
-		if(nome.isBlank() || descricao.isBlank() || campus == null || imagem == null) {
+		if(nome.isBlank() || descricao.isBlank() || campus == null || imagem == null || tags.isBlank()) {
 			return ResponseEntity.badRequest().build(); 
 		}
 		
 	    try {
-	    	Community obj = service.insert(new Community(nome, descricao, campus), imagem);
+	    	Set<Tags> tagSet = Arrays.stream(tags.split(","))
+                    .map(String::toUpperCase)
+                    .map(Tags::valueOf)
+                    .collect(Collectors.toSet());
+	    	
+	    	Community obj = service.insert(new Community(nome, descricao, campus, tagSet), imagem);
 	        
 	        URI uri = ServletUriComponentsBuilder
 	        	.fromCurrentRequest()
