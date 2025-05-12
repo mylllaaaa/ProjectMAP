@@ -154,13 +154,4 @@ public class Post implements Serializable {
 		Post other = (Post) obj;
 		return Objects.equals(id, other.id);
 	}
-
-	public AuthorDTO getAutor() {
-		return author;
-	}
-
-	public void setAutor(AuthorDTO autor) {
-		this.author = autor;
-	}
-	
 }

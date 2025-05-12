@@ -21,6 +21,7 @@ import com.myllamedeiros.projectmap.domain.Comment;
 import com.myllamedeiros.projectmap.dto.CommentDTO;
 import com.myllamedeiros.projectmap.services.CommentService;
 import com.myllamedeiros.projectmap.util.AtualizadorDeComments;
+import com.myllamedeiros.projectmap.util.AtualizadorDeNotificacoes;
 import com.myllamedeiros.projectmap.util.CriadorDeUsuarioDTO;
 
 @RestController
@@ -35,6 +36,9 @@ public class CommentResource {
 	
 	@Autowired
 	private AtualizadorDeComments atualizadorDeComments;
+	
+	@Autowired
+	private AtualizadorDeNotificacoes atualizadorDeNotificacoes;
 	
 	@GetMapping()
 	public ResponseEntity<List<Comment>> findAll(){
@@ -83,6 +87,7 @@ public class CommentResource {
 	    
 	    atualizadorDeComments.atualizarListaDeCommentsDoPost(idDoPost, comment);
 	    atualizadorDeComments.atualizarListaDeCommentsDoUser(matriculaDoAutor, comment);
+	    atualizadorDeNotificacoes.notificacaoDeNovoComentario(idDoPost, matriculaDoAutor);
 	    return ResponseEntity.created(uri).build(); 
 	}
 

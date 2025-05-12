@@ -28,6 +28,16 @@ public class UserService {
 		return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado"));
 	}
 	
+	public User findByUserName(String userName) {
+		List<User> list = rep.findAll();
+		for(User u: list) {
+			if(u.getNomeDeUsuario().equals(userName)) {
+				return u;
+			}
+		}
+		throw new ObjectNotFoundException("Objeto não encontrado");
+	}
+	
 	public User insert(User user, MultipartFile imagem) throws IOException {
 		user.setImagem(imagem.getBytes());
 		return rep.insert(user);
