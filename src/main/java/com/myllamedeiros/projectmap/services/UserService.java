@@ -39,7 +39,6 @@ public class UserService {
 	}
 	
 	public User insert(User user, MultipartFile imagem) throws IOException {
-		user.setImagem(imagem.getBytes());
 		return rep.insert(user);
 	}
 	

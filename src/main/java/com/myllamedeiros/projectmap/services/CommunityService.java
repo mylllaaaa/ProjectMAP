@@ -28,6 +28,16 @@ public class CommunityService {
 		return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado"));
 	}
 	
+	public Community findByName(String name) {
+		List<Community> list = rep.findAll();
+		for(Community c: list) {
+			if(c.getNome().equals(name)) {
+				return c;
+			}
+		}
+		throw new ObjectNotFoundException("Objeto não encontrado");
+	}
+	
 	public Community insert(Community Comunity, MultipartFile imagem) throws IOException {
 		Comunity.setImagem(imagem.getBytes());
 		return rep.insert(Comunity);

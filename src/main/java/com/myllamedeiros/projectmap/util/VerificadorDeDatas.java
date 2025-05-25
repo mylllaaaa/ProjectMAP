@@ -1,9 +1,13 @@
 package com.myllamedeiros.projectmap.util;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class VerificadorDeIdades {
+import org.springframework.stereotype.Component;
+
+@Component
+public class VerificadorDeDatas {
 	public static Integer retornarIdade(Date data) {
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		String[] dataDeHoje = sdf.format(new Date()).split("/");
@@ -15,5 +19,10 @@ public class VerificadorDeIdades {
 			}	
 		}
 		return Integer.parseInt(dataDeHoje[2]) - Integer.parseInt(dataDeReferencia[2]) - 1;
+	}
+	
+	public Date retornarData(String data) throws ParseException {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		return sdf.parse(data);
 	}
 }

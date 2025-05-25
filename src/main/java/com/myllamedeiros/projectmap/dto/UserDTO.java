@@ -1,11 +1,10 @@
  package com.myllamedeiros.projectmap.dto;
 
 import java.io.Serializable;
-
 import com.myllamedeiros.projectmap.domain.User;
 import com.myllamedeiros.projectmap.enums.Campus;
 import com.myllamedeiros.projectmap.enums.Curso;
-import com.myllamedeiros.projectmap.util.VerificadorDeIdades;
+import com.myllamedeiros.projectmap.util.VerificadorDeDatas;
 
 public class UserDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -25,7 +24,7 @@ public class UserDTO implements Serializable {
 		campus = user.getCampus();
 		curso = user.getCurso();
 		descricao = user.getDescricao();
-		idade = VerificadorDeIdades.retornarIdade(user.getDataNascimento());
+		idade = VerificadorDeDatas.retornarIdade(user.getDataNascimento());
 	}
 	public String getNomeDeUsuario() {
 		return nomeDeUsuario;

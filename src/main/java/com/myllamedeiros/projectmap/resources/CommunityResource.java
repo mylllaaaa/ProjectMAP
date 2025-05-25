@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -31,8 +32,7 @@ import com.myllamedeiros.projectmap.enums.Tags;
 import com.myllamedeiros.projectmap.services.CommunityService;
 import com.myllamedeiros.projectmap.util.ApresentarUsersECommunities;
 
-
-
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping(value="/communities")
 public class CommunityResource {
@@ -58,6 +58,12 @@ public class CommunityResource {
 	@GetMapping(value = "/{id}/dto")
 	public ResponseEntity<CommunityDTO> findByIdDTO(@PathVariable String id){
 		Community obj = service.findById(id);
+		return ResponseEntity.ok().body(new CommunityDTO(obj));
+	}
+	
+	@GetMapping(value = "/{nome}/dto")
+	public ResponseEntity<CommunityDTO> findByNameDTO(@PathVariable String name){
+		Community obj = service.findByName(name);
 		return ResponseEntity.ok().body(new CommunityDTO(obj));
 	}
 	

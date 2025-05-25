@@ -2,6 +2,7 @@ package com.myllamedeiros.projectmap.resources;
 
 import java.io.IOException;
 import java.net.URI;
+import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -20,7 +22,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.myllamedeiros.projectmap.domain.User;
@@ -31,7 +32,10 @@ import com.myllamedeiros.projectmap.enums.Curso;
 import com.myllamedeiros.projectmap.services.UserService;
 import com.myllamedeiros.projectmap.util.ApresentarUsersECommunities;
 import com.myllamedeiros.projectmap.util.AtualizadorDeUsersECommunity;
+import com.myllamedeiros.projectmap.util.VerificadorDeDatas;
+import com.myllamedeiros.projectmap.util.VerificadorDeNomes;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping(value = "/users")
 public class UserResource {
@@ -45,6 +49,12 @@ public class UserResource {
 	@Autowired
 	private ApresentarUsersECommunities apresentarUsersECommunities;
 
+	@Autowired
+	private VerificadorDeNomes verificadorDeNomes;
+	
+	@Autowired
+	private VerificadorDeDatas verificadorDeIdades;
+	
 	@GetMapping
 	public ResponseEntity<List<UserDTO>> findAll() {
 		List<User> list = service.findAll();
@@ -63,6 +73,13 @@ public class UserResource {
 		return ResponseEntity.ok().body(new UserDTO(obj));
 	}
 	
+	@GetMapping(value = "/{nome}/dto")
+	public ResponseEntity<UserDTO> findByUserNameDTO(@PathVariable String nome) {
+		User obj = service.findByUserName(nome);
+		return ResponseEntity.ok().body(new UserDTO(obj));
+	}
+	
+	
 	@GetMapping(value = "/{id}/communities")
 	public ResponseEntity<Set<String>> findCommunitiesIds(@PathVariable String id) {
 		User obj = service.findById(id);
@@ -79,25 +96,26 @@ public class UserResource {
 	public ResponseEntity<Void> insert(@RequestParam("matricula") String matricula, @RequestParam("nome") String nome,
 			@RequestParam("nomeDeUsuario") String nomeDeUsuario, @RequestParam("email") String email,
 			@RequestParam("campus") Campus campus, @RequestParam("curso") Curso curso,
-			@RequestParam("dataNascimento") Date dataNascimento, @RequestParam("senha") String senha,
-			@RequestParam("descricao") String descricao, @RequestParam("imagem") MultipartFile imagem) {
+			@RequestParam("dataNascimento") String dataNascimento, @RequestParam("senha") String senha,
+			@RequestParam("descricao") String descricao) {
 
-		if (matricula.isBlank() || nome.isBlank() || nomeDeUsuario.isBlank() || email.isBlank() || campus == null
-				|| curso == null || dataNascimento == null || senha.isBlank() || descricao.isBlank()
-				|| imagem == null) {
+		if (matricula.isBlank() || nome.isBlank() || nomeDeUsuario.isBlank() || email.isBlank() ||senha.isBlank() || !verificadorDeNomes.verificarNomeDeUsuario(nomeDeUsuario)) {
 			return ResponseEntity.badRequest().build();
 		}
 
 		try {
+			Date data = verificadorDeIdades.retornarData(dataNascimento);
 			User obj = service.insert(
-					new User(matricula, nome, nomeDeUsuario, email, campus, curso, dataNascimento, senha, descricao),
-					imagem);
+					new User(matricula, nome, nomeDeUsuario, email, campus, curso, data, senha, descricao), null);
 
 			URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getMatricula())
 					.toUri();
 
 			return ResponseEntity.created(uri).build();
 		} catch (IOException e) {
+			System.out.print("Erro ao salvar user: " + e.getMessage());
+			return ResponseEntity.internalServerError().build();
+		} catch (ParseException e) {
 			System.out.print("Erro ao salvar user: " + e.getMessage());
 			return ResponseEntity.internalServerError().build();
 		}
