@@ -3,6 +3,7 @@ package com.myllamedeiros.projectmap.resources;
 import java.io.IOException;
 import java.net.URI;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -25,11 +26,13 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.myllamedeiros.projectmap.domain.Community;
+import com.myllamedeiros.projectmap.domain.Post;
 import com.myllamedeiros.projectmap.dto.CommunityDTO;
 import com.myllamedeiros.projectmap.dto.UserDTO;
 import com.myllamedeiros.projectmap.enums.Campus;
 import com.myllamedeiros.projectmap.enums.Tags;
 import com.myllamedeiros.projectmap.services.CommunityService;
+import com.myllamedeiros.projectmap.services.PostService;
 import com.myllamedeiros.projectmap.util.ApresentarUsersECommunities;
 
 @CrossOrigin(origins = "*")
@@ -41,12 +44,20 @@ public class CommunityResource {
 	private CommunityService service;
 	
 	@Autowired
+	private PostService postService;
+	
+	@Autowired
 	private ApresentarUsersECommunities apresentarUsersECommunities;
 	
 	@GetMapping
 	public ResponseEntity<List<Community>> findAll(){
 		List<Community> list = service.findAll();
-		//List<CommunityDTO> listDTO = list.stream().map(x -> new CommunityDTO(x)).collect(Collectors.toList());
+		return ResponseEntity.ok().body(list);
+	}
+	
+	@GetMapping(value = "/{campus}/campus")
+	public ResponseEntity<List<Community>> findByCampus(@PathVariable Campus campus){
+		List<Community> list = service.findByCampus(campus);
 		return ResponseEntity.ok().body(list);
 	}
 	
@@ -55,16 +66,29 @@ public class CommunityResource {
 		return ResponseEntity.ok().body(service.findById(id));
 	}
 	
+	@GetMapping(value = "/{id}/posts")
+	public ResponseEntity<List<Post>> findPosts(@PathVariable String id){
+		List<Post> listDoService = service.findPosts(id);
+		List<Post> listDeRetorno = new LinkedList<>();
+		for(Post p: listDoService) {
+			System.out.print(p.getId());
+			listDeRetorno.add(postService.findById(p.getId()));
+		}
+		System.out.println(listDeRetorno.size());
+		return ResponseEntity.ok().body(listDeRetorno);
+	}
+	
 	@GetMapping(value = "/{id}/dto")
 	public ResponseEntity<CommunityDTO> findByIdDTO(@PathVariable String id){
 		Community obj = service.findById(id);
 		return ResponseEntity.ok().body(new CommunityDTO(obj));
 	}
 	
-	@GetMapping(value = "/{nome}/dto")
-	public ResponseEntity<CommunityDTO> findByNameDTO(@PathVariable String name){
-		Community obj = service.findByName(name);
-		return ResponseEntity.ok().body(new CommunityDTO(obj));
+	@GetMapping(value = "/{nome}/name")
+	public ResponseEntity<Community> findByNameDTO(@PathVariable String nome){
+		Community obj = service.findByName(nome);
+		System.out.println("Fui chamado");
+		return ResponseEntity.ok().body(obj);
 	}
 	
 	@GetMapping(value = "/{id}/users")
@@ -133,5 +157,17 @@ public class CommunityResource {
 		newCommunity = service.update(newCommunity, id);
 		return ResponseEntity.noContent().build();
 	}
-
+	
+	@PatchMapping(value = "/{id}/imagem", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	public ResponseEntity<Void> updateImagem(
+	        @PathVariable String id,
+	        @RequestParam("imagem") MultipartFile imagem) {
+	    
+	    try {
+	        service.updateImagem(id, imagem);
+	        return ResponseEntity.noContent().build();
+	    } catch (IOException e) {
+	        return ResponseEntity.internalServerError().build();
+	    }
+	}
 }

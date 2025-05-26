@@ -15,6 +15,7 @@ import com.myllamedeiros.projectmap.domain.User;
 import com.myllamedeiros.projectmap.dto.AuthorDTO;
 import com.myllamedeiros.projectmap.enums.Campus;
 import com.myllamedeiros.projectmap.enums.Curso;
+import com.myllamedeiros.projectmap.enums.Tags;
 import com.myllamedeiros.projectmap.repository.CommentRepository;
 import com.myllamedeiros.projectmap.repository.CommunityRepository;
 import com.myllamedeiros.projectmap.repository.PostRepository;
@@ -37,6 +38,7 @@ public class Instantiation implements CommandLineRunner{
 	
 	@Override
 	public void run(String... args) throws Exception {
+		/*
 		userRepository.deleteAll();
 		comRepository.deleteAll();
 		postRepository.deleteAll();
@@ -49,8 +51,11 @@ public class Instantiation implements CommandLineRunner{
 		User lyria = new User("0158489852315", "Lyria of Lagalos", "Piggy","lyria@gmail.com", Campus.CAMPUSVII, Curso.COMPUTACAO, sdf.parse("12/05/2005"), "789", "A Red");
 		userRepository.saveAll(Arrays.asList(pax, electra, lyria));
 		
-		Community com1 = new Community("ASOAIF", "Melhor saga de fantasia do mundo", Campus.CAMPUSV, new LinkedHashSet<>());
-		Community com2 = new Community("RED RISING", "Melhor saga de Sci-fi do mundo", Campus.CAMPUSV, new LinkedHashSet<>());
+		Community com1 = new Community("ASOAIF", "Melhor saga de fantasia do mundo", Campus.CAMPUSVII, new LinkedHashSet<>());
+		Community com2 = new Community("RED RISING", "Melhor saga de Sci-fi do mundo", Campus.CAMPUSVII, new LinkedHashSet<>());
+		com1.getTags().add(Tags.FICCAO_CIENTIFICA);
+		com1.getTags().add( Tags.GUERRA);
+		com1.getTags().add(Tags.AVENTURA);
 		comRepository.saveAll(Arrays.asList(com1, com2));
 		
 		Post post = new Post("Indo ao espaço", "UHULLLLLLL", new AuthorDTO(pax), com2.getId());
@@ -63,5 +68,6 @@ public class Instantiation implements CommandLineRunner{
 		comRepository.saveAll(Arrays.asList(com1, com2));
 		postRepository.saveAll(Arrays.asList(post));
 		commentRepsitory.saveAll(Arrays.asList(comment));
+		*/
 	}
 }
