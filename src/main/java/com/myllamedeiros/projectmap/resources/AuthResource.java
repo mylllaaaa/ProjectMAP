@@ -1,5 +1,8 @@
 package com.myllamedeiros.projectmap.resources;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -19,12 +22,19 @@ public class AuthResource {
     private UserService service;
 
     @PostMapping(value = "/login")
-    public ResponseEntity<String> login(@RequestParam("matricula") String matricula, @RequestParam("senha") String senha) {
+    public ResponseEntity<?> login(@RequestParam("matricula") String matricula, @RequestParam("senha") String senha) {
     	User user = service.findById(matricula);
 
         if (user == null || !user.getSenha().equals(senha)) {
             return ResponseEntity.status(401).body("Matrícula ou senha incorretos");
         }
-        return ResponseEntity.ok(matricula);
+        
+        Map<String, Object> response = new HashMap<>();
+        response.put("matricula", user.getMatricula());
+        response.put("nomeDeUsuario", user.getNomeDeUsuario());
+        response.put("campus", user.getCampus().toString());
+        response.put("token", user.getMatricula());
+        
+        return ResponseEntity.ok(response);
     }
 }
