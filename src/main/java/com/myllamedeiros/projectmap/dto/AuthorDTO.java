@@ -10,7 +10,7 @@ public class AuthorDTO implements Serializable {
 	
 	private String nomeDeUsuario;
 	private Campus campus;
-	
+
 	public AuthorDTO() {
 	}
 

@@ -2,7 +2,6 @@ package com.myllamedeiros.projectmap.resources;
 
 import java.io.IOException;
 import java.net.URI;
-import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -22,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.myllamedeiros.projectmap.domain.User;
@@ -96,26 +96,25 @@ public class UserResource {
 	public ResponseEntity<Void> insert(@RequestParam("matricula") String matricula, @RequestParam("nome") String nome,
 			@RequestParam("nomeDeUsuario") String nomeDeUsuario, @RequestParam("email") String email,
 			@RequestParam("campus") Campus campus, @RequestParam("curso") Curso curso,
-			@RequestParam("dataNascimento") String dataNascimento, @RequestParam("senha") String senha,
-			@RequestParam("descricao") String descricao) {
+			@RequestParam("dataNascimento") Date dataNascimento, @RequestParam("senha") String senha,
+			@RequestParam("descricao") String descricao, @RequestParam("imagem") MultipartFile imagem) {
 
-		if (matricula.isBlank() || nome.isBlank() || nomeDeUsuario.isBlank() || email.isBlank() ||senha.isBlank() || !verificadorDeNomes.verificarNomeDeUsuario(nomeDeUsuario)) {
+		if (matricula.isBlank() || nome.isBlank() || nomeDeUsuario.isBlank() || email.isBlank() || campus == null
+				|| curso == null || dataNascimento == null || senha.isBlank() || descricao.isBlank()
+				|| imagem == null) {
 			return ResponseEntity.badRequest().build();
 		}
 
 		try {
-			Date data = verificadorDeIdades.retornarData(dataNascimento);
 			User obj = service.insert(
-					new User(matricula, nome, nomeDeUsuario, email, campus, curso, data, senha, descricao), null);
+					new User(matricula, nome, nomeDeUsuario, email, campus, curso, dataNascimento, senha, descricao),
+					imagem);
 
 			URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getMatricula())
 					.toUri();
 
 			return ResponseEntity.created(uri).build();
 		} catch (IOException e) {
-			System.out.print("Erro ao salvar user: " + e.getMessage());
-			return ResponseEntity.internalServerError().build();
-		} catch (ParseException e) {
 			System.out.print("Erro ao salvar user: " + e.getMessage());
 			return ResponseEntity.internalServerError().build();
 		}
