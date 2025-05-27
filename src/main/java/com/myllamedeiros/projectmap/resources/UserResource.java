@@ -53,7 +53,7 @@ public class UserResource {
 	private VerificadorDeNomes verificadorDeNomes;
 	
 	@Autowired
-	private VerificadorDeDatas verificadorDeIdades;
+	private VerificadorDeDatas verificadorDeDatas;
 	
 	@GetMapping
 	public ResponseEntity<List<UserDTO>> findAll() {
@@ -96,18 +96,19 @@ public class UserResource {
 	public ResponseEntity<Void> insert(@RequestParam("matricula") String matricula, @RequestParam("nome") String nome,
 			@RequestParam("nomeDeUsuario") String nomeDeUsuario, @RequestParam("email") String email,
 			@RequestParam("campus") Campus campus, @RequestParam("curso") Curso curso,
-			@RequestParam("dataNascimento") Date dataNascimento, @RequestParam("senha") String senha,
+			@RequestParam("dataNascimento") String dataNascimento, @RequestParam("senha") String senha,
 			@RequestParam("descricao") String descricao, @RequestParam("imagem") MultipartFile imagem) {
 
 		if (matricula.isBlank() || nome.isBlank() || nomeDeUsuario.isBlank() || email.isBlank() || campus == null
 				|| curso == null || dataNascimento == null || senha.isBlank() || descricao.isBlank()
-				|| imagem == null) {
+				|| imagem == null || !verificadorDeNomes.verificarNomeDeUsuario(nomeDeUsuario)) {
 			return ResponseEntity.badRequest().build();
 		}
-
+		
 		try {
+			Date data = verificadorDeDatas.retornarData(dataNascimento);
 			User obj = service.insert(
-					new User(matricula, nome, nomeDeUsuario, email, campus, curso, dataNascimento, senha, descricao),
+					new User(matricula, nome, nomeDeUsuario, email, campus, curso, data, senha, descricao),
 					imagem);
 
 			URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getMatricula())
@@ -115,6 +116,9 @@ public class UserResource {
 
 			return ResponseEntity.created(uri).build();
 		} catch (IOException e) {
+			System.out.print("Erro ao salvar user: " + e.getMessage());
+			return ResponseEntity.internalServerError().build();
+		} catch (java.text.ParseException e) {
 			System.out.print("Erro ao salvar user: " + e.getMessage());
 			return ResponseEntity.internalServerError().build();
 		}
